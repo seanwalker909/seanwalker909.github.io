@@ -76,7 +76,7 @@ whose tools span the rest of the platform.</p>
 </tr>
 <tr>
 <td><strong>Backend endpoint</strong></td>
-<td>OpenAI-compatible API (routed via DuckDNS host <code>*.b0g0.duckdns.org/v1</code>); <code>OLLAMA_BASE_URL</code>/<code>USE_OLLAMA_DOCKER</code> wired for local model serving</td>
+<td>OpenAI-compatible API — LM Studio local-model server on the MacBook Pro (<code>172.16.0.244:1234</code>, M2 / 32 GB) over the LAN; <code>OLLAMA_BASE_URL</code> wired for the LM Studio path</td>
 <td>config</td>
 </tr>
 <tr>
@@ -111,8 +111,9 @@ whose tools span the rest of the platform.</p>
 the agent layer talks to real infrastructure over a standard tool protocol — the same
 integration pattern now common in enterprise AI stacks (LangChain/LangGraph/MCP),
 built and operated hands-on, not just read about.</li>
-<li><strong>Local-first AI.</strong> Search, translation, and chat backends run on-device with no
-per-query egress — a privacy posture that mirrors the &quot;data residency&quot; work done at
+<li><strong>Local-first AI.</strong> Search, translation, and LLM inference run on the local network
+with no per-query egress — the model server (LM Studio) sits on the MacBook Pro, served to
+the Pi over the LAN. A privacy posture that mirrors the &quot;data residency&quot; work done at
 AppOmni (Private Service Connect, PgBouncer).</li>
 <li><strong>Automation as a platform.</strong> n8n runners + webhooks + an agent that can <em>drive</em> the
 platform (read Grafana metrics, execute workflows, manage calendars) is the &quot;agentic
@@ -124,8 +125,9 @@ The stack is instrumented well enough that software can operate it.</li>
 </ul>
 <h2>Status (2026-10-02)</h2>
 <p>Open WebUI, searxng-mcp, n8n, LibreTranslate, FlareSolverr all up (33+ h at capture,
-healthy where healthchecks exist). Ollama configured as the local-model path; the live
-backend at capture is the OpenAI-compatible endpoint above.</p>
+healthy where healthchecks exist). The live local-model backend at capture is LM Studio on
+the MacBook Pro (<code>172.16.0.244:1234</code>), reachable over the LAN as the OpenAI-compatible
+endpoint above.</p>
 
 <div class="foot">Self-Hosted Platform Portfolio · captured from the live system · nvm3 / Raspberry Pi 5</div>
 </main></div></body></html>

@@ -65,30 +65,27 @@ hr{border:none;border-top:1px solid var(--border);margin:26px 0}
    LAN clients /        │  EDGE  Nginx Proxy Manager (80/443, TLS)   │
    mobile / public  ───▶│  auto-certs · host definitions · DuckDNS   │
                         └───────────────┬────────────────────────────┘
-                                        │ web-proxy network
-        ┌───────────────┬───────────────┼────────────────┬────────────────┐
-        ▼               ▼               ▼                ▼                ▼
-  ┌───────────┐  ┌────────────┐  ┌───────────┐  ┌─────────────┐  ┌─────────────┐
-  │ Media     │  │ Local AI   │  │ Photos    │  │ Automation  │  │ Productivity│
-  │ platform  │  │ stack      │  │ platform  │  │ &amp; agents    │  │ &amp; security  │
-  │ (Jellyfin,│  │ (OpenWebUI,│  │ (Immich   │  │ (n8n, MCP   │  │ (Vaultwarden│
-  │  *arr,    │  │  SearXNG,  │  │  server,  │  │  servers,   │  │  Yuvomi,    │
-  │  Jackett, │  │  Libre-    │  │  PG+vec,  │  │  Hermes     │  │  Pi-hole,   │
-  │  qBitt)   │  │  Translate)│  │  ML, redis)│  │  agent)     │  │  FlareSol)  │
-  └─────┬─────┘  └─────┬──────┘  └─────┬─────┘  └──────┬──────┘  └──────┬──────┘
-        │               │               │               │                │
-        └───────────────┴───────┬───────┴───────────────┴────────────────┘
-                                ▼
-                 ┌────────────────────────────────────────┐
-                 │ HOST: RPi 5 · Debian 13 · Docker 29.8  │
-                 │ per-service bridge networks · 1 TB NVMe│
-                 └───────────────────┬────────────────────┘
-                                     ▼
-                 ┌────────────────────────────────────────┐
-                 │ OBSERVABILITY                          │
-                 │ node_exporter (9100) → Prometheus (15s)│
-                 │ → Grafana · smartmontools · cron jobs  │
-                 └────────────────────────────────────────┘
+                                        │ web-proxy network (LAN)
+                                        ▼
+ ┌──────────────────┐   OpenAI-compatible (172.16.0.244:1234)
+ │ HOST: MacBook Pro │──────────────────────────────┐
+ │ M2 · 32 GB · macOS│                               │
+ │                  │                               ▼
+ │  LM Studio :1234 │        ┌──────────────────────────────────────┐
+ │  local inference │        │ HOST: nvm3 · RPi 5 · Debian 13 · 8GB │
+ └──────────────────┘        │ Docker 29.8 · 1 TB NVMe              │
+                             │  ┌────────┐┌────────┐┌────────┐      │
+   nightly AES-256 rsync     │  │ Media  ││ LocalAI││ Photos │      │
+  ┌──────────────────┐       │  │ Jelly- ││ OWebUI ││ Immich │      │
+  │ HOST: walk3r     │◀───────│  │ fin*arr││ SearXNG││ PG+ML  │      │
+  │ RPi 5 · 128 GB   │  back  │  └────────┘└────────┘└────────┘      │
+  │ microSD          │        │  ┌────────┐┌────────┐┌────────┐      │
+  │ Vaultwarden bkp  │        │  │ n8n+   ││Pi-hole ││Vault-  │      │
+  │ (more staged)    │        │  │ Hermes ││DNS     ││warden  │      │
+  └──────────────────┘        └──────────────────────────────────────┘
+                             │  OBSERVABILITY: node_exporter(9100)
+                             │  → Prometheus(15s) → Grafana · smartmontools
+                             └──────────────────────────────────────────┘
 </code></pre>
 <h2>Data flows worth calling out</h2>
 <p><strong>Media pipeline.</strong> <code>Prowlarr</code> propagates indexer definitions to <code>Jackett</code>; <code>Sonarr</code>/<code>Lidarr</code>
@@ -97,7 +94,9 @@ with <code>WidevineCdm</code> present for DRM playback paths. All daemons run as
 <code>/opt</code>-based installs — a deliberately different deployment pattern from the containerized
 apps, chosen for the *arr suite&#39;s native ARM64 packages.</p>
 <p><strong>Local AI.</strong> <code>Open WebUI</code> (8081) serves the chat interface and points at an
-OpenAI-compatible backend endpoint rather than a bare local model server; <code>searxng-mcp</code>
+OpenAI-compatible backend — the LM Studio local-model server running on the MacBook Pro
+(<code>172.16.0.244:1234</code>, M2 / 32 GB) over the LAN — rather than a model server on the Pi
+itself; <code>searxng-mcp</code>
 exposes the local SearXNG instance as an MCP search tool; <code>LibreTranslate</code> (5001) provides
 offline translation. Together these form a self-contained AI layer with no per-query
 egress — the same integration pattern (MCP + OpenAI-compatible APIs) used in the agent
@@ -127,7 +126,7 @@ qBittorrent webui on the LAN IP), otherwise loopback.</li>
 running and exposed at <code>prometheus.b0g0.duckdns.org</code>. Disk health via smartmontools
 (active). This is the same Prometheus → Grafana pattern used professionally (see
 <a href="background.md">background</a>: Datadog/Prometheus/Grafana at Dolby and VictoriaMetrics at
-AppOmni) — here, owned end to end on one host.</p>
+AppOmni) — here, owned end to end on nvm3.</p>
 
 <div class="foot">Self-Hosted Platform Portfolio · captured from the live system · nvm3 / Raspberry Pi 5</div>
 </main></div></body></html>

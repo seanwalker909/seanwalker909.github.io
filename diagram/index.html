@@ -32,11 +32,11 @@
 <div class="wrap">
   <header>
     <h1><span class="dot"></span>Self-Hosted Platform · nvm3 + MacBook Pro + walk3r</h1>
-    <div class="sub">20+ production services on nvm3 (RPi 5) · LM Studio AI backend on MacBook Pro M2 · offsite backups on walk3r (RPi 5) · captured 2026-10-04</div>
+    <div class="sub">20+ services on nvm3 (RPi 5) · AI chain: Open WebUI → Hermes → LM Studio on MacBook Pro M2 (2023, 32 GB, 172.16.0.244:1234) · offsite backups on walk3r (RPi 5, 128 GB microSD, 172.16.0.118) · WireGuard remote access on GL-iNet router · captured 2026-10-04</div>
   </header>
 
   <div class="diagram-card">
-  <svg width="1040" height="800" viewBox="0 0 1040 800" xmlns="http://www.w3.org/2000/svg">
+  <svg width="1040" height="820" viewBox="0 0 1040 820" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
         <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
@@ -50,18 +50,26 @@
       <marker id="arrow-rose" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
         <path d="M0,0 L8,4 L0,8 Z" fill="#fb7185"/>
       </marker>
+      <marker id="arrow-rose-start" markerWidth="8" markerHeight="8" refX="0" refY="4" orient="auto">
+        <path d="M8,0 L0,4 L8,8 Z" fill="#fb7185"/>
+      </marker>
     </defs>
-    <rect width="1040" height="800" fill="url(#grid)"/>
+    <rect width="1040" height="820" fill="url(#grid)"/>
 
     <!-- ARROWS (drawn early, behind boxes) -->
-    <!-- clients -> edge -->
-    <line x1="520" y1="86" x2="520" y2="118" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <!-- clients -> wireguard -->
+    <line x1="520" y1="88" x2="520" y2="112" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <!-- wireguard -> edge -->
+    <line x1="520" y1="178" x2="520" y2="202" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
     <!-- edge -> nvm3 host -->
-    <line x1="520" y1="186" x2="520" y2="248" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
-    <!-- CROSS-HOST: Mac LM Studio -> nvm3 Local AI stack (OpenAI-compatible :1234) -->
-    <line x1="200" y1="361" x2="250" y2="361" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
+    <line x1="520" y1="280" x2="520" y2="298" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <!-- CROSS-HOST: nvm3 Local AI stack -> Mac LM Studio (OpenAI-compatible :1234) — calls the Mac -->
+    <line x1="250" y1="420" x2="200" y2="420" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#arrow-cyan)"/>
     <!-- CROSS-HOST: nvm3 -> walk3r (nightly encrypted backup) -->
-    <line x1="800" y1="400" x2="825" y2="400" stroke="#fb7185" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow-rose)"/>
+    <line x1="800" y1="420" x2="838" y2="420" stroke="#fb7185" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrow-rose)"/>
+    <!-- EDGE: nginx <-> duckdns (bidirectional SSL cert exchange) -->
+    <line x1="478" y1="248" x2="542" y2="248" stroke="#fb7185" stroke-width="1.5" marker-start="url(#arrow-rose-start)" marker-end="url(#arrow-rose)"/>
+    <text x="510" y="240" text-anchor="middle" font-size="7" fill="#94a3b8">SSL certificate</text>
 
     <!-- CLIENTS -->
     <rect x="390" y="16" width="260" height="70" rx="6" fill="#0f172a"/>
@@ -69,131 +77,138 @@
     <text x="520" y="44" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">LAN Clients · Mobile · Public</text>
     <text x="520" y="64" text-anchor="middle" font-size="9" fill="#94a3b8">Jellyfin / Immich / Open WebUI / n8n / Yuvomi / Vaultwarden</text>
 
+    <!-- WIREGUARD (GL-iNet router) — remote access gateway -->
+    <rect x="300" y="114" width="440" height="64" rx="6" fill="#0f172a"/>
+    <rect x="300" y="114" width="440" height="64" rx="6" fill="rgba(136,19,55,0.35)" stroke="#fb7185" stroke-width="1.5"/>
+    <text x="520" y="136" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">WireGuard VPN</text>
+    <text x="520" y="153" text-anchor="middle" font-size="9" fill="#94a3b8">GL-iNet router · remote access · :51820</text>
+    <text x="520" y="169" text-anchor="middle" font-size="8" fill="#64748b">tunnels remote/public clients into the LAN</text>
+
     <!-- EDGE BOUNDARY (security) — in front of nvm3 -->
-    <rect x="250" y="118" width="530" height="68" rx="12" fill="none" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4,4"/>
-    <text x="262" y="134" font-size="8" fill="#fb7185">SECURITY / EDGE</text>
-    <rect x="270" y="136" width="240" height="40" rx="6" fill="#0f172a"/>
-    <rect x="270" y="136" width="240" height="40" rx="6" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.5"/>
-    <text x="390" y="153" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Nginx Proxy Manager</text>
-    <text x="390" y="168" text-anchor="middle" font-size="8" fill="#94a3b8">TLS · auto-certs · 80/81/443</text>
-    <rect x="530" y="136" width="220" height="40" rx="6" fill="#0f172a"/>
-    <rect x="530" y="136" width="220" height="40" rx="6" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.5"/>
-    <text x="640" y="153" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">DuckDNS</text>
-    <text x="640" y="168" text-anchor="middle" font-size="8" fill="#94a3b8">b0g0.duckdns.org</text>
+    <rect x="250" y="204" width="530" height="76" rx="12" fill="none" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4,4"/>
+    <text x="262" y="220" font-size="8" fill="#fb7185">SECURITY / EDGE</text>
+    <rect x="272" y="228" width="198" height="40" rx="6" fill="#0f172a"/>
+    <rect x="272" y="228" width="198" height="40" rx="6" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.5"/>
+    <text x="371" y="245" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Nginx Proxy Manager</text>
+    <text x="371" y="260" text-anchor="middle" font-size="8" fill="#94a3b8">TLS · auto-certs · 80/81/443</text>
+    <rect x="550" y="228" width="198" height="40" rx="6" fill="#0f172a"/>
+    <rect x="550" y="228" width="198" height="40" rx="6" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.5"/>
+    <text x="649" y="245" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">DuckDNS</text>
+    <text x="649" y="260" text-anchor="middle" font-size="8" fill="#94a3b8">b0g0.duckdns.org</text>
 
     <!-- ============ HOST 1: MACBOOK PRO (LM Studio) ============ -->
-    <rect x="40" y="268" width="175" height="288" rx="12" fill="none" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="8,4"/>
-    <text x="52" y="284" font-size="9" fill="#fbbf24" font-weight="700">HOST — MacBook Pro</text>
-    <text x="52" y="298" font-size="8" fill="#94a3b8">M2 · 32 GB · macOS</text>
-    <text x="52" y="311" font-size="8" fill="#64748b">172.16.0.244 · always-on</text>
-    <rect x="55" y="300" width="145" height="136" rx="6" fill="#0f172a"/>
-    <rect x="55" y="300" width="145" height="136" rx="6" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
-    <text x="127" y="322" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">LM Studio</text>
-    <text x="127" y="342" text-anchor="middle" font-size="9" fill="#94a3b8">OpenAI-compatible</text>
-    <text x="127" y="358" text-anchor="middle" font-size="9" fill="#94a3b8">server :1234</text>
-    <text x="127" y="382" text-anchor="middle" font-size="8" fill="#64748b">local model inference</text>
-    <text x="127" y="400" text-anchor="middle" font-size="8" fill="#64748b">M2 GPU · 32 GB</text>
+    <rect x="40" y="320" width="175" height="288" rx="12" fill="none" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="8,4"/>
+    <text x="52" y="336" font-size="9" fill="#fbbf24" font-weight="700">HOST — MacBook Pro</text>
+    <text x="52" y="350" font-size="8" fill="#94a3b8">M2 · 2023 · 32 GB · macOS</text>
+    <text x="52" y="363" font-size="8" fill="#64748b">172.16.0.244 · always-on</text>
+    <rect x="55" y="352" width="145" height="136" rx="6" fill="#0f172a"/>
+    <rect x="55" y="352" width="145" height="136" rx="6" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+    <text x="127" y="374" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">LM Studio</text>
+    <text x="127" y="394" text-anchor="middle" font-size="9" fill="#94a3b8">OpenAI-compatible</text>
+    <text x="127" y="410" text-anchor="middle" font-size="9" fill="#94a3b8">172.16.0.244 :1234</text>
+    <text x="127" y="434" text-anchor="middle" font-size="8" fill="#64748b">local model inference</text>
+    <text x="127" y="452" text-anchor="middle" font-size="8" fill="#64748b">M2 GPU · 32 GB</text>
 
     <!-- ============ HOST 2: NVM3 (main platform) ============ -->
-    <rect x="230" y="248" width="570" height="330" rx="12" fill="none" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="8,4"/>
-    <text x="246" y="268" font-size="9" fill="#fbbf24" font-weight="700">HOST — nvm3 · Raspberry Pi 5 · Debian 13 · Docker 29.8 · 8 GB · 1 TB NVMe</text>
+    <rect x="230" y="300" width="570" height="330" rx="12" fill="none" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="8,4"/>
+    <text x="246" y="320" font-size="9" fill="#fbbf24" font-weight="700">HOST — nvm3 · Raspberry Pi 5 · Debian 13 · Docker 29.8 · 8 GB · 1 TB NVMe</text>
 
     <!-- LOCAL AI (frontend cyan) — leftmost, adjacent to Mac -->
-    <rect x="250" y="286" width="160" height="150" rx="6" fill="#0f172a"/>
-    <rect x="250" y="286" width="160" height="150" rx="6" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
-    <text x="330" y="308" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Local AI Stack</text>
-    <text x="330" y="328" text-anchor="middle" font-size="9" fill="#94a3b8">Open WebUI :8081</text>
-    <text x="330" y="344" text-anchor="middle" font-size="9" fill="#94a3b8">LM Studio → Mac :1234</text>
-    <text x="330" y="360" text-anchor="middle" font-size="9" fill="#94a3b8">SearXNG + MCP :8889</text>
-    <text x="330" y="376" text-anchor="middle" font-size="9" fill="#94a3b8">LibreTranslate :5001</text>
-    <text x="330" y="400" text-anchor="middle" font-size="8" fill="#64748b">metasearch · translate</text>
-    <text x="330" y="418" text-anchor="middle" font-size="8" fill="#64748b">FlareSolverr 8191</text>
+    <rect x="250" y="338" width="160" height="150" rx="6" fill="#0f172a"/>
+    <rect x="250" y="338" width="160" height="150" rx="6" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+    <text x="330" y="360" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Local AI Stack</text>
+    <text x="330" y="380" text-anchor="middle" font-size="9" fill="#94a3b8">Open WebUI :8081 → Hermes</text>
+    <text x="330" y="396" text-anchor="middle" font-size="9" fill="#94a3b8">→ LM Studio (Mac) :1234</text>
+    <text x="330" y="412" text-anchor="middle" font-size="9" fill="#94a3b8">SearXNG + MCP :8889</text>
+    <text x="330" y="428" text-anchor="middle" font-size="9" fill="#94a3b8">LibreTranslate :5001</text>
+    <text x="330" y="452" text-anchor="middle" font-size="8" fill="#64748b">metasearch · translate</text>
+    <text x="330" y="470" text-anchor="middle" font-size="8" fill="#64748b">FlareSolverr 8191</text>
 
     <!-- MEDIA PLATFORM (backend green) -->
-    <rect x="430" y="286" width="160" height="150" rx="6" fill="#0f172a"/>
-    <rect x="430" y="286" width="160" height="150" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
-    <text x="510" y="308" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Media Platform</text>
-    <text x="510" y="328" text-anchor="middle" font-size="9" fill="#94a3b8">Jellyfin 10.11 :8096</text>
-    <text x="510" y="344" text-anchor="middle" font-size="9" fill="#94a3b8">Sonarr · Lidarr · Prowlarr</text>
-    <text x="510" y="360" text-anchor="middle" font-size="9" fill="#94a3b8">Jackett :9117</text>
-    <text x="510" y="376" text-anchor="middle" font-size="9" fill="#94a3b8">qBittorrent :62978</text>
-    <text x="510" y="400" text-anchor="middle" font-size="8" fill="#64748b">systemd · /opt installs</text>
-    <text x="510" y="418" text-anchor="middle" font-size="8" fill="#64748b">Frigate NVR (staged)</text>
+    <rect x="430" y="338" width="160" height="150" rx="6" fill="#0f172a"/>
+    <rect x="430" y="338" width="160" height="150" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+    <text x="510" y="360" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Media Platform</text>
+    <text x="510" y="380" text-anchor="middle" font-size="9" fill="#94a3b8">Jellyfin 10.11 :8096</text>
+    <text x="510" y="396" text-anchor="middle" font-size="9" fill="#94a3b8">Sonarr · Lidarr · Prowlarr</text>
+    <text x="510" y="412" text-anchor="middle" font-size="9" fill="#94a3b8">Jackett :9117</text>
+    <text x="510" y="428" text-anchor="middle" font-size="9" fill="#94a3b8">qBittorrent :62978</text>
+    <text x="510" y="452" text-anchor="middle" font-size="8" fill="#64748b">systemd · /opt installs</text>
+    <text x="510" y="470" text-anchor="middle" font-size="8" fill="#64748b">Frigate NVR (staged)</text>
 
     <!-- PHOTOS (database violet) -->
-    <rect x="610" y="286" width="160" height="150" rx="6" fill="#0f172a"/>
-    <rect x="610" y="286" width="160" height="150" rx="6" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1.5"/>
-    <text x="690" y="308" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Photo Platform</text>
-    <text x="690" y="328" text-anchor="middle" font-size="9" fill="#94a3b8">Immich Server :2283</text>
-    <text x="690" y="344" text-anchor="middle" font-size="9" fill="#94a3b8">Postgres 14 + pgvector</text>
-    <text x="690" y="360" text-anchor="middle" font-size="9" fill="#94a3b8">ML worker (faces)</text>
-    <text x="690" y="376" text-anchor="middle" font-size="9" fill="#94a3b8">Valkey :6379</text>
-    <text x="690" y="400" text-anchor="middle" font-size="8" fill="#64748b">local ML on 8 GB RAM</text>
-    <text x="690" y="418" text-anchor="middle" font-size="8" fill="#64748b">group bridge network</text>
+    <rect x="610" y="338" width="160" height="150" rx="6" fill="#0f172a"/>
+    <rect x="610" y="338" width="160" height="150" rx="6" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+    <text x="690" y="360" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Photo Platform</text>
+    <text x="690" y="380" text-anchor="middle" font-size="9" fill="#94a3b8">Immich Server :2283</text>
+    <text x="690" y="396" text-anchor="middle" font-size="9" fill="#94a3b8">Postgres 14 + pgvector</text>
+    <text x="690" y="412" text-anchor="middle" font-size="9" fill="#94a3b8">ML worker (faces)</text>
+    <text x="690" y="428" text-anchor="middle" font-size="9" fill="#94a3b8">Valkey :6379</text>
+    <text x="690" y="452" text-anchor="middle" font-size="8" fill="#64748b">local ML on 8 GB RAM</text>
+    <text x="690" y="470" text-anchor="middle" font-size="8" fill="#64748b">group bridge network</text>
 
     <!-- ROW 2: AUTOMATION -->
-    <rect x="250" y="456" width="118" height="80" rx="6" fill="#0f172a"/>
-    <rect x="250" y="456" width="118" height="80" rx="6" fill="rgba(251,146,60,0.3)" stroke="#fb923c" stroke-width="1.5"/>
-    <text x="309" y="480" text-anchor="middle" font-size="11" fill="#e2e8f0" font-weight="700">Automation</text>
-    <text x="309" y="498" text-anchor="middle" font-size="9" fill="#94a3b8">n8n :5678 · Hermes</text>
-    <text x="309" y="516" text-anchor="middle" font-size="8" fill="#64748b">MCP: Grafana · n8n</text>
+    <rect x="250" y="508" width="118" height="80" rx="6" fill="#0f172a"/>
+    <rect x="250" y="508" width="118" height="80" rx="6" fill="rgba(251,146,60,0.3)" stroke="#fb923c" stroke-width="1.5"/>
+    <text x="309" y="532" text-anchor="middle" font-size="11" fill="#e2e8f0" font-weight="700">Automation</text>
+    <text x="309" y="550" text-anchor="middle" font-size="9" fill="#94a3b8">n8n :5678 · Hermes</text>
+    <text x="309" y="568" text-anchor="middle" font-size="8" fill="#64748b">MCP: Grafana · n8n</text>
 
     <!-- ROW 2: PI-HOLE -->
-    <rect x="384" y="456" width="118" height="80" rx="6" fill="#0f172a"/>
-    <rect x="384" y="456" width="118" height="80" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
-    <text x="443" y="480" text-anchor="middle" font-size="11" fill="#e2e8f0" font-weight="700">Pi-hole FTL</text>
-    <text x="443" y="498" text-anchor="middle" font-size="9" fill="#94a3b8">DNS · ad-block</text>
-    <text x="443" y="516" text-anchor="middle" font-size="8" fill="#64748b">:53 · LAN resolver</text>
+    <rect x="384" y="508" width="118" height="80" rx="6" fill="#0f172a"/>
+    <rect x="384" y="508" width="118" height="80" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+    <text x="443" y="532" text-anchor="middle" font-size="11" fill="#e2e8f0" font-weight="700">Pi-hole FTL</text>
+    <text x="443" y="550" text-anchor="middle" font-size="9" fill="#94a3b8">DNS · ad-block</text>
+    <text x="443" y="568" text-anchor="middle" font-size="8" fill="#64748b">:53 · LAN resolver</text>
 
     <!-- ROW 2: VAULTWARDEN -->
-    <rect x="518" y="456" width="118" height="80" rx="6" fill="#0f172a"/>
-    <rect x="518" y="456" width="118" height="80" rx="6" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.5"/>
-    <text x="577" y="480" text-anchor="middle" font-size="11" fill="#e2e8f0" font-weight="700">Vaultwarden</text>
-    <text x="577" y="498" text-anchor="middle" font-size="9" fill="#94a3b8">passwords</text>
-    <text x="577" y="516" text-anchor="middle" font-size="8" fill="#64748b">nightly → walk3r</text>
+    <rect x="518" y="508" width="118" height="80" rx="6" fill="#0f172a"/>
+    <rect x="518" y="508" width="118" height="80" rx="6" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.5"/>
+    <text x="577" y="532" text-anchor="middle" font-size="11" fill="#e2e8f0" font-weight="700">Vaultwarden</text>
+    <text x="577" y="550" text-anchor="middle" font-size="9" fill="#94a3b8">passwords</text>
+    <text x="577" y="568" text-anchor="middle" font-size="8" fill="#64748b">nightly → walk3r</text>
 
     <!-- ROW 2: SYSTEMD -->
-    <rect x="652" y="456" width="118" height="80" rx="6" fill="#0f172a"/>
-    <rect x="652" y="456" width="118" height="80" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
-    <text x="711" y="480" text-anchor="middle" font-size="11" fill="#e2e8f0" font-weight="700">Systemd</text>
-    <text x="711" y="498" text-anchor="middle" font-size="9" fill="#94a3b8">SSH :22 · cron</text>
-    <text x="711" y="516" text-anchor="middle" font-size="8" fill="#64748b">smartmontools</text>
+    <rect x="652" y="508" width="118" height="80" rx="6" fill="#0f172a"/>
+    <rect x="652" y="508" width="118" height="80" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+    <text x="711" y="532" text-anchor="middle" font-size="11" fill="#e2e8f0" font-weight="700">System Services</text>
+    <text x="711" y="550" text-anchor="middle" font-size="9" fill="#94a3b8">SSH :22 · cron</text>
+    <text x="711" y="568" text-anchor="middle" font-size="8" fill="#64748b">smartmontools</text>
 
     <!-- ============ HOST 3: WALK3R (offsite backup) ============ -->
-    <rect x="825" y="268" width="175" height="288" rx="12" fill="none" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="8,4"/>
-    <text x="837" y="284" font-size="9" fill="#fbbf24" font-weight="700">HOST — walk3r</text>
-    <text x="837" y="298" font-size="8" fill="#94a3b8">Raspberry Pi 5 · 128 GB</text>
-    <text x="837" y="311" font-size="8" fill="#64748b">microSD · 172.16.0.118</text>
-    <rect x="840" y="300" width="145" height="136" rx="6" fill="#0f172a"/>
-    <rect x="840" y="300" width="145" height="136" rx="6" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.5"/>
-    <text x="912" y="322" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Backup Target</text>
-    <text x="912" y="342" text-anchor="middle" font-size="9" fill="#94a3b8">Vaultwarden · nightly</text>
-    <text x="912" y="358" text-anchor="middle" font-size="9" fill="#94a3b8">AES-256 · rsync</text>
-    <text x="912" y="382" text-anchor="middle" font-size="8" fill="#64748b">nvm3 service backups</text>
-    <text x="912" y="400" text-anchor="middle" font-size="8" fill="#64748b">more services staged</text>
+    <rect x="825" y="320" width="175" height="288" rx="12" fill="none" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="8,4"/>
+    <text x="837" y="336" font-size="9" fill="#fbbf24" font-weight="700">HOST — walk3r</text>
+    <text x="837" y="350" font-size="8" fill="#94a3b8">Raspberry Pi 5 · 128 GB</text>
+    <text x="837" y="363" font-size="8" fill="#64748b">microSD · 172.16.0.118</text>
+    <rect x="840" y="352" width="145" height="136" rx="6" fill="#0f172a"/>
+    <rect x="840" y="352" width="145" height="136" rx="6" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.5"/>
+    <text x="912" y="374" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Backup Target</text>
+    <text x="912" y="394" text-anchor="middle" font-size="9" fill="#94a3b8">Vaultwarden · nightly</text>
+    <text x="912" y="410" text-anchor="middle" font-size="9" fill="#94a3b8">AES-256 · rsync</text>
+    <text x="912" y="434" text-anchor="middle" font-size="8" fill="#64748b">nvm3 service backups</text>
+    <text x="912" y="452" text-anchor="middle" font-size="8" fill="#64748b">more services staged</text>
 
     <!-- OBSERVABILITY boundary (spans nvm3 host) -->
-    <rect x="230" y="688" width="570" height="80" rx="12" fill="none" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="8,4"/>
-    <text x="246" y="708" font-size="9" fill="#fbbf24" font-weight="700">OBSERVABILITY</text>
-    <rect x="246" y="718" width="124" height="40" rx="6" fill="#0f172a"/>
-    <rect x="246" y="718" width="124" height="40" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
-    <text x="308" y="735" text-anchor="middle" font-size="10" fill="#e2e8f0" font-weight="700">node_exporter</text>
-    <text x="308" y="750" text-anchor="middle" font-size="8" fill="#94a3b8">:9100 · ACTIVE</text>
-    <rect x="386" y="718" width="124" height="40" rx="6" fill="#0f172a"/>
-    <rect x="386" y="718" width="124" height="40" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
-    <text x="448" y="735" text-anchor="middle" font-size="10" fill="#e2e8f0" font-weight="700">Prometheus</text>
-    <text x="448" y="750" text-anchor="middle" font-size="8" fill="#94a3b8">:9090 · 15 s scrape</text>
-    <rect x="526" y="718" width="124" height="40" rx="6" fill="#0f172a"/>
-    <rect x="526" y="718" width="124" height="40" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
-    <text x="588" y="735" text-anchor="middle" font-size="10" fill="#e2e8f0" font-weight="700">Grafana</text>
-    <text x="588" y="750" text-anchor="middle" font-size="8" fill="#94a3b8">:3000 · dashboards</text>
-    <rect x="666" y="718" width="124" height="40" rx="6" fill="#0f172a"/>
-    <rect x="666" y="718" width="124" height="40" rx="6" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.5"/>
-    <text x="728" y="735" text-anchor="middle" font-size="10" fill="#e2e8f0" font-weight="700">Backups</text>
-    <text x="728" y="750" text-anchor="middle" font-size="8" fill="#94a3b8">AES-256 · → walk3r</text>
+    <rect x="230" y="660" width="570" height="80" rx="12" fill="none" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="8,4"/>
+    <text x="246" y="680" font-size="9" fill="#fbbf24" font-weight="700">OBSERVABILITY</text>
+    <rect x="246" y="690" width="124" height="40" rx="6" fill="#0f172a"/>
+    <rect x="246" y="690" width="124" height="40" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+    <text x="308" y="707" text-anchor="middle" font-size="10" fill="#e2e8f0" font-weight="700">node_exporter</text>
+    <text x="308" y="722" text-anchor="middle" font-size="8" fill="#94a3b8">:9100 · ACTIVE</text>
+    <rect x="386" y="690" width="124" height="40" rx="6" fill="#0f172a"/>
+    <rect x="386" y="690" width="124" height="40" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+    <text x="448" y="707" text-anchor="middle" font-size="10" fill="#e2e8f0" font-weight="700">Prometheus</text>
+    <text x="448" y="722" text-anchor="middle" font-size="8" fill="#94a3b8">:9090 · 15 s scrape</text>
+    <rect x="526" y="690" width="124" height="40" rx="6" fill="#0f172a"/>
+    <rect x="526" y="690" width="124" height="40" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+    <text x="588" y="707" text-anchor="middle" font-size="10" fill="#e2e8f0" font-weight="700">Grafana</text>
+    <text x="588" y="722" text-anchor="middle" font-size="8" fill="#94a3b8">:3000 · dashboards</text>
+    <rect x="666" y="690" width="124" height="40" rx="6" fill="#0f172a"/>
+    <rect x="666" y="690" width="124" height="40" rx="6" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.5"/>
+    <text x="728" y="707" text-anchor="middle" font-size="10" fill="#e2e8f0" font-weight="700">Backups</text>
+    <text x="728" y="722" text-anchor="middle" font-size="8" fill="#94a3b8">AES-256 · → walk3r</text>
 
     <!-- LEGEND (outside all boundaries) -->
-    <text x="40" y="788" font-size="8" fill="#64748b">Legend:  <tspan fill="#34d399">■</tspan> backend   <tspan fill="#22d3ee">■</tspan> frontend/AI   <tspan fill="#a78bfa">■</tspan> data/ML   <tspan fill="#fb923c">■</tspan> automation   <tspan fill="#fb7185">■</tspan> security/backup   <tspan fill="#fbbf24">▭</tspan> host boundary   <tspan fill="#22d3ee">─</tspan> LAN flow (AI inference)   <tspan fill="#fb7185">┄</tspan> backup flow</text>
+    <text x="40" y="775" font-size="8" fill="#64748b">Legend:  <tspan fill="#34d399">■</tspan> backend   <tspan fill="#22d3ee">■</tspan> frontend/AI   <tspan fill="#a78bfa">■</tspan> data/ML   <tspan fill="#fb923c">■</tspan> automation   <tspan fill="#fb7185">■</tspan> security/backup/VPN   <tspan fill="#fbbf24">▭</tspan> host boundary   <tspan fill="#22d3ee">─</tspan> LAN flow (AI inference)   <tspan fill="#fb7185">┄</tspan> backup flow   <tspan fill="#fb7185">↔</tspan> SSL cert</text>
   </svg>
   </div>
 
@@ -221,13 +236,13 @@
       <ul>
         <li>• Nightly encrypted credential backups → walk3r (offsite)</li>
         <li>• LM Studio inference on MacBook Pro M2 (32 GB)</li>
+        <li>• WireGuard remote access via GL-iNet router</li>
         <li>• SMART/NVMe health polling + Grafana live</li>
-        <li>• Agent-operable: MCP + Grafana + terminal</li>
       </ul>
     </div>
   </div>
 
-  <footer>Self-Hosted Platform Architecture · captured from live system · 2026-10-04 · nvm3 (RPi 5) + MacBook Pro M2 + walk3r (RPi 5)</footer>
+  <footer>Self-Hosted Platform Architecture · captured from live system · 2026-10-04 · nvm3 (RPi 5) + MacBook Pro M2 + walk3r (RPi 5) + GL-iNet router (WireGuard)</footer>
 </div>
 </body>
 </html>

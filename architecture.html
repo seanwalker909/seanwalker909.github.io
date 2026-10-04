@@ -61,31 +61,36 @@ hr{border:none;border-top:1px solid var(--border);margin:26px 0}
 <p>Interactive version: <a href="diagram/index.html">diagram/index.html</a> (self-contained, opens in any browser)</p>
 </blockquote>
 <h2>Layers</h2>
-<pre><code>                        ┌────────────────────────────────────────────┐
-   LAN clients /        │  EDGE  Nginx Proxy Manager (80/443, TLS)   │
-   mobile / public  ───▶│  auto-certs · host definitions · DuckDNS   │
-                        └───────────────┬────────────────────────────┘
-                                        │ web-proxy network (LAN)
-                                        ▼
- ┌──────────────────┐   OpenAI-compatible (172.16.0.244:1234)
- │ HOST: MacBook Pro │──────────────────────────────┐
- │ M2 · 32 GB · macOS│                               │
- │                  │                               ▼
- │  LM Studio :1234 │        ┌──────────────────────────────────────┐
- │  local inference │        │ HOST: nvm3 · RPi 5 · Debian 13 · 8GB │
- └──────────────────┘        │ Docker 29.8 · 1 TB NVMe              │
-                             │  ┌────────┐┌────────┐┌────────┐      │
-   nightly AES-256 rsync     │  │ Media  ││ LocalAI││ Photos │      │
-  ┌──────────────────┐       │  │ Jelly- ││ OWebUI ││ Immich │      │
-  │ HOST: walk3r     │◀───────│  │ fin*arr││ SearXNG││ PG+ML  │      │
-  │ RPi 5 · 128 GB   │  back  │  └────────┘└────────┘└────────┘      │
-  │ microSD          │        │  ┌────────┐┌────────┐┌────────┐      │
-  │ Vaultwarden bkp  │        │  │ n8n+   ││Pi-hole ││Vault-  │      │
-  │ (more staged)    │        │  │ Hermes ││DNS     ││warden  │      │
-  └──────────────────┘        └──────────────────────────────────────┘
-                             │  OBSERVABILITY: node_exporter(9100)
-                             │  → Prometheus(15s) → Grafana · smartmontools
-                             └──────────────────────────────────────────┘
+<pre><code>     LAN clients / mobile / public
+              │
+              ▼
+   ┌──────────────────────────────────┐
+   │ WIREGUARD VPN · GL-iNet router   │
+   │ remote access · :51820           │
+   └──────────────┬───────────────────┘
+                  │  tunnels remote/public → LAN
+                  ▼
+   ┌─────────────────────────────────────────────────┐
+   │ EDGE                                             │
+   │  Nginx Proxy Manager (80/443, TLS)     DuckDNS   │
+   │  auto-certs · host defs    ◀─SSL cert─▶          │
+   └──────────────────────┬──────────────────────────┘
+                          │  web-proxy network (LAN)
+                          ▼
+ ┌──────────────────┐      nvm3: Open WebUI → Hermes ──▶ LM Studio
+ │ HOST: MacBook Pro│◀────────(OpenAI-compatible :1234)
+ │ M2 · 2023 · 32 GB │    over LAN · 172.16.0.244:1234
+ │  LM Studio :1234  │
+ │  local inference  │   ┌─────────────────────────────┐
+ └──────────────────┘   │ HOST: nvm3 · RPi 5 · Debian13│
+                        │ Docker 29.8 · 8 GB · 1TB NVMe│
+   nightly AES-256 rsync│  Media │ LocalAI │ Photos    │
+  ┌──────────────────┐  │ Jelly- │ OWebUI  │ Immich    │
+  │ HOST: walk3r     │◀─│ fin*arr│ SearXNG │ PG+ML     │
+  │ RPi 5 · 128 GB   │back│ n8n+ │ Pi-hole │ Vaultwarden│
+  │ microSD          │  │ Hermes │ DNS     │           │
+  │ Vaultwarden bkp  │  │ OBS: node_exp→Prom→Grafana   │
+  └──────────────────┘  └─────────────────────────────┘
 </code></pre>
 <h2>Data flows worth calling out</h2>
 <p><strong>Media pipeline.</strong> <code>Prowlarr</code> propagates indexer definitions to <code>Jackett</code>; <code>Sonarr</code>/<code>Lidarr</code>
@@ -93,9 +98,9 @@ discover and request content; <code>qBittorrent-nox</code> downloads; <code>Jell
 with <code>WidevineCdm</code> present for DRM playback paths. All daemons run as systemd services with
 <code>/opt</code>-based installs — a deliberately different deployment pattern from the containerized
 apps, chosen for the *arr suite&#39;s native ARM64 packages.</p>
-<p><strong>Local AI.</strong> <code>Open WebUI</code> (8081) serves the chat interface and points at an
-OpenAI-compatible backend — the LM Studio local-model server running on the MacBook Pro
-(<code>172.16.0.244:1234</code>, M2 / 32 GB) over the LAN — rather than a model server on the Pi
+<p><strong>Local AI.</strong> <code>Open WebUI</code> (8081) serves the chat interface; it routes through
+<code>Hermes</code> (agent runtime) to an OpenAI-compatible backend — LM Studio on the MacBook Pro M2
+(2023, 32 GB, <code>172.16.0.244:1234</code>, always-on) over the LAN — rather than a model server on the Pi
 itself; <code>searxng-mcp</code>
 exposes the local SearXNG instance as an MCP search tool; <code>LibreTranslate</code> (5001) provides
 offline translation. Together these form a self-contained AI layer with no per-query

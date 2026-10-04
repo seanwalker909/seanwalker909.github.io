@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security & Networking · Self-Hosted Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b1120; --card:#0f172a; --border:#1e293b; --text:#e2e8f0;
+  --muted:#94a3b8; --accent:#34d399; --accent2:#22d3ee; --code:#0a0f1c;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  font-size:14px; line-height:1.65;
+}
+a{color:var(--accent2); text-decoration:none}
+a:hover{text-decoration:underline}
+.layout{display:grid; grid-template-columns:250px 1fr; min-height:100vh}
+nav{
+  position:sticky; top:0; align-self:start; height:100vh; overflow:auto;
+  padding:26px 20px; border-right:1px solid var(--border); background:var(--card);
+}
+.brand{font-size:13px;font-weight:700;letter-spacing:.3px;margin-bottom:4px}
+.brand span{color:var(--accent)}
+.tag{font-size:10px;color:var(--muted);margin-bottom:22px}
+nav .grp{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#475569;margin:18px 0 6px}
+nav a.item{display:block;font-size:12px;color:var(--muted);padding:5px 8px;border-radius:6px;margin:1px 0}
+nav a.item:hover{background:#111c33;color:var(--text);text-decoration:none}
+nav a.item.cur{background:rgba(52,211,153,.12);color:var(--accent)}
+main{padding:38px 48px; max-width:900px}
+h1,h2,h3{line-height:1.25;font-weight:700}
+h1{font-size:24px;margin:0 0 8px;border-bottom:1px solid var(--border);padding-bottom:14px}
+h2{font-size:18px;margin:34px 0 10px;color:#f1f5f9}
+h3{font-size:15px;margin:22px 0 8px}
+p{margin:12px 0}
+ul,ol{margin:12px 0; padding-left:22px}
+li{margin:5px 0}
+code{background:var(--code);padding:2px 6px;border-radius:4px;font-size:12.5px;border:1px solid var(--border)}
+pre{background:var(--code);border:1px solid var(--border);border-radius:8px;padding:14px 16px;overflow:auto}
+pre code{background:none;border:none;padding:0}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:13px;display:block;overflow-x:auto}
+th,td{border:1px solid var(--border);padding:8px 12px;text-align:left}
+th{background:#111c33;color:#f1f5f9}
+tr:nth-child(even) td{background:#0d1526}
+blockquote{border-left:3px solid var(--accent);margin:14px 0;padding:4px 16px;color:var(--muted);background:#0d1526;border-radius:0 6px 6px 0}
+hr{border:none;border-top:1px solid var(--border);margin:26px 0}
+.crumbs{font-size:11px;color:#475569;margin-bottom:18px}
+.crumbs a{color:#64748b}
+.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--border);font-size:10px;color:#475569}
+@media(max-width:760px){.layout{grid-template-columns:1fr}nav{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border)}main{padding:24px 18px}}
+</style></head>
+<body><div class="layout">
+<nav><div class="brand">self<span>-hosted</span></div>
+<div class="tag">Raspberry Pi 5 · 20+ services · portfolio</div>
+<div class="grp">Overview</div><a class="item" href="README.html">Home</a><div class="grp">Platform</div><a class="item" href="platform.html">Hardware & Services</a><a class="item" href="architecture.html">Architecture</a><div class="grp">Projects</div><a class="item" href="projects/media-pipeline.html">Media Pipeline</a><a class="item" href="projects/local-ai-agents.html">Local AI & Agents</a><a class="item" href="projects/observability-ops.html">Observability & Ops</a><a class="item cur" href="projects/security-networking.html">Security & Networking</a><a class="item" href="projects/published.html">Published Work</a><div class="grp">Portfolio</div><a class="item" href="skills.html">Skills Matrix</a><a class="item" href="background.html">Background</a><div class="grp">View</div><a class="item" href="../diagram/index.html">Architecture Diagram</a></nav>
+<main><div class="crumbs"><a href="../index.html">home</a> / security & networking</div>
+<h1>Security &amp; Networking</h1>
+<h2>Edge</h2>
+<ul>
+<li><strong>Nginx Proxy Manager</strong> (80/81/443) terminates TLS for the public-facing apps, with
+automated certificate issuance; host definitions per app.</li>
+<li><strong>DuckDNS</strong> (<code>*.b0g0.duckdns.org</code>) provides stable public names for a dynamic LAN IP.</li>
+<li>HTTP redirects to HTTPS at the proxy layer; webhook endpoints (n8n) configured with
+<code>N8N_PROTOCOL=https</code> and proxy-hops awareness (<code>N8N_PROXY_HOPS=1</code>) so signatures and
+callbacks survive the proxy.</li>
+</ul>
+<h2>Exposure surface (captured 2026-10-02)</h2>
+<table>
+<thead>
+<tr>
+<th>Binding</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>0.0.0.0</code></td>
+<td>Only where LAN/client access is intended (Jellyfin, n8n, Open WebUI, Immich, etc.)</td>
+</tr>
+<tr>
+<td>LAN-IP-bound</td>
+<td>qBittorrent webui (<code>:62978</code>) bound to <code>eth0</code>/bridge IPs, not loopback</td>
+</tr>
+<tr>
+<td><code>127.0.0.1</code> only</td>
+<td>FlareSolverr (8191), Valkey (6379), Immich Postgres (5432) — internal helpers never reachable from the LAN</td>
+</tr>
+<tr>
+<td>SSH (<code>:22</code>)</td>
+<td>Remote admin; key-based (ed25519 keypair used by the backup script)</td>
+</tr>
+</tbody></table>
+<h2>DNS &amp; network</h2>
+<ul>
+<li><strong>Pi-hole FTL v6.4.3</strong> (systemd + cron) — local DNS with ad/tracker filtering; the
+machine also acts as the network&#39;s resolver for its own LAN.</li>
+<li>One Docker bridge network per service group; shared services (Immich stack) on a group
+network; <code>web-proxy</code> external network for proxied apps. No service publishes internal
+ports to the host interface.</li>
+<li>No WireGuard server currently; offsite sync uses SSH with a dedicated key
+(<code>/root/.ssh/id_ed25519</code>) — the pattern is ready for a VPN if a remote access path is
+needed.</li>
+</ul>
+<h2>Credentials &amp; secrets</h2>
+<ul>
+<li><strong>Vaultwarden</strong> as the single password store; its data directory is the subject of the
+nightly <strong>AES-256 (PBKDF2) encrypted, offsite rsync</strong> backup (see
+<a href="observability-ops.md">observability-ops</a>) — plaintext never leaves the box.</li>
+<li>API keys/tokens kept in per-service env/config files outside version control; the
+Hermes agent&#39;s secrets follow the same convention (<code>~/.hermes/.env</code>, settings in
+<code>config.yaml</code>).</li>
+</ul>
+<h2>Why this matters</h2>
+<p>The same four instincts that show up in SOC2/FedRAMP work at previous employers —
+least exposure, encrypted at rest, offsite redundancy, key-based auth — applied
+consistently on personal infrastructure.</p>
+
+<div class="foot">Self-Hosted Platform Portfolio · captured from the live system · nvm3 / Raspberry Pi 5</div>
+</main></div></body></html>

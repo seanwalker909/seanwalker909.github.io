@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home · Self-Hosted Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b1120; --card:#0f172a; --border:#1e293b; --text:#e2e8f0;
+  --muted:#94a3b8; --accent:#34d399; --accent2:#22d3ee; --code:#0a0f1c;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  font-size:14px; line-height:1.65;
+}
+a{color:var(--accent2); text-decoration:none}
+a:hover{text-decoration:underline}
+.layout{display:grid; grid-template-columns:250px 1fr; min-height:100vh}
+nav{
+  position:sticky; top:0; align-self:start; height:100vh; overflow:auto;
+  padding:26px 20px; border-right:1px solid var(--border); background:var(--card);
+}
+.brand{font-size:13px;font-weight:700;letter-spacing:.3px;margin-bottom:4px}
+.brand span{color:var(--accent)}
+.tag{font-size:10px;color:var(--muted);margin-bottom:22px}
+nav .grp{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#475569;margin:18px 0 6px}
+nav a.item{display:block;font-size:12px;color:var(--muted);padding:5px 8px;border-radius:6px;margin:1px 0}
+nav a.item:hover{background:#111c33;color:var(--text);text-decoration:none}
+nav a.item.cur{background:rgba(52,211,153,.12);color:var(--accent)}
+main{padding:38px 48px; max-width:900px}
+h1,h2,h3{line-height:1.25;font-weight:700}
+h1{font-size:24px;margin:0 0 8px;border-bottom:1px solid var(--border);padding-bottom:14px}
+h2{font-size:18px;margin:34px 0 10px;color:#f1f5f9}
+h3{font-size:15px;margin:22px 0 8px}
+p{margin:12px 0}
+ul,ol{margin:12px 0; padding-left:22px}
+li{margin:5px 0}
+code{background:var(--code);padding:2px 6px;border-radius:4px;font-size:12.5px;border:1px solid var(--border)}
+pre{background:var(--code);border:1px solid var(--border);border-radius:8px;padding:14px 16px;overflow:auto}
+pre code{background:none;border:none;padding:0}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:13px;display:block;overflow-x:auto}
+th,td{border:1px solid var(--border);padding:8px 12px;text-align:left}
+th{background:#111c33;color:#f1f5f9}
+tr:nth-child(even) td{background:#0d1526}
+blockquote{border-left:3px solid var(--accent);margin:14px 0;padding:4px 16px;color:var(--muted);background:#0d1526;border-radius:0 6px 6px 0}
+hr{border:none;border-top:1px solid var(--border);margin:26px 0}
+.crumbs{font-size:11px;color:#475569;margin-bottom:18px}
+.crumbs a{color:#64748b}
+.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--border);font-size:10px;color:#475569}
+@media(max-width:760px){.layout{grid-template-columns:1fr}nav{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border)}main{padding:24px 18px}}
+</style></head>
+<body><div class="layout">
+<nav><div class="brand">self<span>-hosted</span></div>
+<div class="tag">Raspberry Pi 5 · 20+ services · portfolio</div>
+<div class="grp">Overview</div><a class="item cur" href="README.html">Home</a><div class="grp">Platform</div><a class="item" href="platform.html">Hardware & Services</a><a class="item" href="architecture.html">Architecture</a><div class="grp">Projects</div><a class="item" href="projects/media-pipeline.html">Media Pipeline</a><a class="item" href="projects/local-ai-agents.html">Local AI & Agents</a><a class="item" href="projects/observability-ops.html">Observability & Ops</a><a class="item" href="projects/security-networking.html">Security & Networking</a><a class="item" href="projects/published.html">Published Work</a><div class="grp">Portfolio</div><a class="item" href="skills.html">Skills Matrix</a><a class="item" href="background.html">Background</a><div class="grp">View</div><a class="item" href="diagram/index.html">Architecture Diagram</a></nav>
+<main><div class="crumbs"><a href="index.html">home</a> / home</div>
+<h1>Engineering Portfolio</h1>
+<blockquote>
+<p>Self-hosted platform engineering on a Raspberry Pi 5 — 20+ production services, a local AI &amp;
+agent-automation stack, and an end-to-end observability layer.</p>
+<p><strong>Sean Walker</strong> — DevOps / SRE / Platform Engineer · Chicago, IL (remote/hybrid) ·
+<a href="mailto:walk34@proton.me">walk34@proton.me</a> · <a href="https://linkedin.com/in/SeanWalker100">LinkedIn</a> · <a href="https://github.com/SeanWalker909">GitHub</a></p>
+<p>CKA · CKAD · BS Computer Science, UIC</p>
+</blockquote>
+<p>This wiki is a living, browsable record of a real, running system — not a slide deck. Every
+service below is live on the host (<code>nvm3</code>, a Raspberry Pi 5), verifiable by port, process, or
+dashboard. The system has served as a personal production platform since mid-2026: media
+pipeline, photo archive, local AI, automation, security, and the observability to prove it all
+works.</p>
+<h2>The platform in one paragraph</h2>
+<p>A Raspberry Pi 5 (8 GB RAM, 1 TB NVMe HAT) running Debian 13 on kernel 6.18, provisioned via
+RPi-Imager, acting as the DNS, reverse proxy, and service host for a home network. On it: a
+seven-daemon media pipeline (Jellyfin + the *arr suite + qBittorrent), a self-hosted Immich
+photo stack with ML, a local AI layer (Open WebUI + SearXNG + LibreTranslate + a Hermes
+OpenAI-compatible endpoint), an n8n automation engine, Vaultwarden, Pi-hole, and a
+Prometheus/Grafana observability stack — fronted by Nginx Proxy Manager with automated TLS,
+and backed by nightly encrypted-adjacent credential backups. This is the same kind of
+work as the production platforms I have operated professionally: containers, GitOps-style
+declarative config, observability, and security hygiene — at a scale a single engineer owns
+end to end.</p>
+<h2>Index</h2>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="platform.md">Platform overview</a></td>
+<td>Hardware, OS, provisioning, network, the full service inventory</td>
+</tr>
+<tr>
+<td><a href="architecture.md">Architecture</a></td>
+<td>Component layers, data flows, network topology (see also the interactive diagram, <code>diagram/index.html</code>)</td>
+</tr>
+<tr>
+<td><a href="projects/media-pipeline.md">Media pipeline</a></td>
+<td>Seven-daemon *arr pipeline: ingestion, torrenting, delivery</td>
+</tr>
+<tr>
+<td><a href="projects/local-ai-agents.md">Local AI &amp; agents</a></td>
+<td>Open WebUI, Hermes agent stack, SearXNG, LibreTranslate, n8n automation</td>
+</tr>
+<tr>
+<td><a href="projects/observability-ops.md">Observability &amp; ops</a></td>
+<td>Prometheus, Grafana, Pi-hole, backup strategy, day-2 operations</td>
+</tr>
+<tr>
+<td><a href="projects/security-networking.md">Security &amp; networking</a></td>
+<td>Reverse proxy, TLS, DNS, exposure surface, hardening</td>
+</tr>
+<tr>
+<td><a href="projects/published.md">Published work</a></td>
+<td>Public repos: hermes-dashboard-themes, SearXNG fork</td>
+</tr>
+<tr>
+<td><a href="skills.md">Skills matrix</a></td>
+<td>Competencies mapped to evidence in this wiki</td>
+</tr>
+<tr>
+<td><a href="background.md">Professional background</a></td>
+<td>Work history and certifications (curated summary)</td>
+</tr>
+</tbody></table>
+<h2>Reading guide (for a hiring manager)</h2>
+<p>If you only read two pages, read <a href="platform.md">Platform overview</a> for what the system is, and
+<a href="skills.md">Skills matrix</a> for what it demonstrates. Everything else is evidence.</p>
+<h2>How this is kept honest</h2>
+<p>Facts in this wiki are captured from the live system (<code>ss</code>, <code>docker ps</code>, <code>systemctl</code>, package
+versions) on the dates noted per page. When a service changes state, the page is updated —
+&quot;running&quot; claims are always re-verifiable. Nothing here is aspirational.</p>
+
+<div class="foot">Self-Hosted Platform Portfolio · captured from the live system · nvm3 / Raspberry Pi 5</div>
+</main></div></body></html>

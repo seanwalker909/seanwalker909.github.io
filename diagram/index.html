@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self-Hosted Platform — Raspberry Pi 5 · Architecture</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#020617; --card:#0f172a; --border:#1e293b; --text:#e2e8f0; --muted:#94a3b8; }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  body{ background:var(--bg); color:var(--text); font-family:'JetBrains Mono',monospace; padding:40px 24px; }
+  .wrap{ max-width:1080px; margin:0 auto; }
+  header{ margin-bottom:24px; }
+  .dot{ display:inline-block; width:10px; height:10px; border-radius:50%; background:#34d399; margin-right:10px; animation:pulse 2s infinite; }
+  @keyframes pulse{ 0%,100%{opacity:1; box-shadow:0 0 0 0 rgba(52,211,153,.5);} 50%{opacity:.7; box-shadow:0 0 0 6px rgba(52,211,153,0);} }
+  h1{ font-size:20px; font-weight:700; display:flex; align-items:center; }
+  .sub{ color:var(--muted); font-size:12px; margin-top:6px; }
+  .diagram-card{ background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; margin-bottom:24px; overflow-x:auto; }
+  .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-bottom:24px; }
+  .card{ background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+  .card-header{ display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+  .card-dot{ width:8px; height:8px; border-radius:50%; }
+  .cyan{ background:#22d3ee; } .green{ background:#34d399; } .violet{ background:#a78bfa; }
+  .amber{ background:#fbbf24; } .rose{ background:#fb7185; } .orange{ background:#fb923c; }
+  .card h3{ font-size:13px; font-weight:700; }
+  .card ul{ list-style:none; }
+  .card li{ font-size:11px; color:var(--muted); margin:6px 0; }
+  footer{ color:#475569; font-size:10px; text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1><span class="dot"></span>Self-Hosted Platform · Raspberry Pi 5</h1>
+    <div class="sub">20+ production services · Debian 13 · Docker 29.8 · 8 GB RAM · 1 TB NVMe · captured 2026-10-02</div>
+  </header>
+
+  <div class="diagram-card">
+  <svg width="1040" height="700" viewBox="0 0 1040 700" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+      </pattern>
+      <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+        <path d="M0,0 L8,4 L0,8 Z" fill="#475569"/>
+      </marker>
+      <marker id="arrow-rose" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+        <path d="M0,0 L8,4 L0,8 Z" fill="#fb7185"/>
+      </marker>
+    </defs>
+    <rect width="1040" height="700" fill="url(#grid)"/>
+
+    <!-- ARROWS (drawn early, behind boxes) -->
+    <line x1="520" y1="86" x2="520" y2="118" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line x1="520" y1="186" x2="170" y2="248" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line x1="520" y1="186" x2="420" y2="248" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line x1="520" y1="186" x2="640" y2="248" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line x1="520" y1="186" x2="860" y2="248" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line x1="170" y1="436" x2="170" y2="478" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line x1="420" y1="436" x2="420" y2="478" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line x1="640" y1="436" x2="640" y2="478" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <line x1="860" y1="436" x2="860" y2="478" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <!-- observability dashed rose -->
+    <path d="M 980 478 L 980 640 L 80 640 L 80 380" fill="none" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#arrow-rose)"/>
+
+    <!-- CLIENTS -->
+    <rect x="380" y="16" width="280" height="70" rx="6" fill="#0f172a"/>
+    <rect x="380" y="16" width="280" height="70" rx="6" fill="rgba(30,41,59,0.5)" stroke="#94a3b8" stroke-width="1.5"/>
+    <text x="520" y="44" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">LAN Clients · Mobile · Public</text>
+    <text x="520" y="64" text-anchor="middle" font-size="9" fill="#94a3b8">Jellyfin / Immich / Open WebUI / n8n / Yuvomi / Vaultwarden</text>
+
+    <!-- EDGE BOUNDARY (security) -->
+    <rect x="290" y="118" width="460" height="68" rx="12" fill="none" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4,4"/>
+    <text x="302" y="134" font-size="8" fill="#fb7185">SECURITY / EDGE</text>
+    <rect x="310" y="136" width="210" height="40" rx="6" fill="#0f172a"/>
+    <rect x="310" y="136" width="210" height="40" rx="6" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.5"/>
+    <text x="415" y="153" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Nginx Proxy Manager</text>
+    <text x="415" y="168" text-anchor="middle" font-size="8" fill="#94a3b8">TLS · auto-certs · 80/81/443</text>
+    <rect x="540" y="136" width="190" height="40" rx="6" fill="#0f172a"/>
+    <rect x="540" y="136" width="190" height="40" rx="6" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.5"/>
+    <text x="635" y="153" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">DuckDNS</text>
+    <text x="635" y="168" text-anchor="middle" font-size="8" fill="#94a3b8">b0g0.duckdns.org</text>
+
+    <!-- PLATFORM BOUNDARY (cloud/host) -->
+    <rect x="40" y="248" width="960" height="330" rx="12" fill="none" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="8,4"/>
+    <text x="56" y="268" font-size="9" fill="#fbbf24" font-weight="700">HOST — Raspberry Pi 5 · Debian 13 · Docker 29.8 · 8 GB · 1 TB NVMe</text>
+
+    <!-- MEDIA PLATFORM (backend green) -->
+    <rect x="60" y="286" width="220" height="150" rx="6" fill="#0f172a"/>
+    <rect x="60" y="286" width="220" height="150" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+    <text x="170" y="308" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Media Platform</text>
+    <text x="170" y="328" text-anchor="middle" font-size="9" fill="#94a3b8">Jellyfin 10.11 :8096 (Widevine)</text>
+    <text x="170" y="344" text-anchor="middle" font-size="9" fill="#94a3b8">Sonarr · Lidarr · Prowlarr</text>
+    <text x="170" y="360" text-anchor="middle" font-size="9" fill="#94a3b8">Jackett :9117</text>
+    <text x="170" y="376" text-anchor="middle" font-size="9" fill="#94a3b8">qBittorrent-nox :62978 (LAN)</text>
+    <text x="170" y="400" text-anchor="middle" font-size="8" fill="#64748b">systemd daemons · /opt installs</text>
+    <text x="170" y="418" text-anchor="middle" font-size="8" fill="#64748b">Frigate NVR (staged, go2rtc)</text>
+
+    <!-- LOCAL AI (frontend cyan) -->
+    <rect x="305" y="286" width="230" height="150" rx="6" fill="#0f172a"/>
+    <rect x="305" y="286" width="230" height="150" rx="6" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+    <text x="420" y="308" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Local AI Stack</text>
+    <text x="420" y="328" text-anchor="middle" font-size="9" fill="#94a3b8">Open WebUI :8081</text>
+    <text x="420" y="344" text-anchor="middle" font-size="9" fill="#94a3b8">OpenAI-compatible backend · Ollama path</text>
+    <text x="420" y="360" text-anchor="middle" font-size="9" fill="#94a3b8">SearXNG + MCP server :8889</text>
+    <text x="420" y="376" text-anchor="middle" font-size="9" fill="#94a3b8">LibreTranslate :5001</text>
+    <text x="420" y="400" text-anchor="middle" font-size="8" fill="#64748b">private metasearch · offline translate</text>
+    <text x="420" y="418" text-anchor="middle" font-size="8" fill="#64748b">FlareSolverr 127.0.0.1:8191</text>
+
+    <!-- PHOTOS (database violet) -->
+    <rect x="560" y="286" width="220" height="150" rx="6" fill="#0f172a"/>
+    <rect x="560" y="286" width="220" height="150" rx="6" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1.5"/>
+    <text x="670" y="308" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Photo Platform</text>
+    <text x="670" y="328" text-anchor="middle" font-size="9" fill="#94a3b8">Immich Server :2283 (v3)</text>
+    <text x="670" y="344" text-anchor="middle" font-size="9" fill="#94a3b8">Postgres 14 + pgvector/vectorchord</text>
+    <text x="670" y="360" text-anchor="middle" font-size="9" fill="#94a3b8">ML worker (faces · smart search)</text>
+    <text x="670" y="376" text-anchor="middle" font-size="9" fill="#94a3b8">Valkey 127.0.0.1:6379</text>
+    <text x="670" y="400" text-anchor="middle" font-size="8" fill="#64748b">local ML on 8 GB RAM</text>
+    <text x="670" y="418" text-anchor="middle" font-size="8" fill="#64748b">group bridge network</text>
+
+    <!-- AUTOMATION (message bus orange) -->
+    <rect x="805" y="286" width="175" height="150" rx="6" fill="#0f172a"/>
+    <rect x="805" y="286" width="175" height="150" rx="6" fill="rgba(251,146,60,0.3)" stroke="#fb923c" stroke-width="1.5"/>
+    <text x="892" y="308" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Automation</text>
+    <text x="892" y="328" text-anchor="middle" font-size="9" fill="#94a3b8">n8n 2.37 :5678 (runners)</text>
+    <text x="892" y="344" text-anchor="middle" font-size="9" fill="#94a3b8">webhooks · TLS callbacks</text>
+    <text x="892" y="360" text-anchor="middle" font-size="9" fill="#94a3b8">Hermes Agent runtime</text>
+    <text x="892" y="376" text-anchor="middle" font-size="9" fill="#94a3b8">MCP: Grafana · n8n · Finance</text>
+    <text x="892" y="400" text-anchor="middle" font-size="8" fill="#64748b">Yuvomi :3000 (planner)</text>
+    <text x="892" y="418" text-anchor="middle" font-size="8" fill="#64748b">agent-operated day-2 ops</text>
+
+    <!-- NETWORKING row (green backends) -->
+    <rect x="60" y="478" width="200" height="80" rx="6" fill="#0f172a"/>
+    <rect x="60" y="478" width="200" height="80" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+    <text x="160" y="502" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Pi-hole FTL v6.4.3</text>
+    <text x="160" y="520" text-anchor="middle" font-size="9" fill="#94a3b8">DNS · ad-block · LAN resolver</text>
+    <text x="160" y="538" text-anchor="middle" font-size="8" fill="#64748b">:53</text>
+
+    <rect x="285" y="478" width="200" height="80" rx="6" fill="#0f172a"/>
+    <rect x="285" y="478" width="200" height="80" rx="6" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.5"/>
+    <text x="385" y="502" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Vaultwarden</text>
+    <text x="385" y="520" text-anchor="middle" font-size="9" fill="#94a3b8">passwords · nightly AES-256 backup</text>
+    <text x="385" y="538" text-anchor="middle" font-size="8" fill="#64748b">rsync → offsite host</text>
+
+    <rect x="510" y="478" width="200" height="80" rx="6" fill="#0f172a"/>
+    <rect x="510" y="478" width="200" height="80" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+    <text x="610" y="502" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Systemd Services</text>
+    <text x="610" y="520" text-anchor="middle" font-size="9" fill="#94a3b8">SSH :22 · smartmontools · cron</text>
+    <text x="610" y="538" text-anchor="middle" font-size="8" fill="#64748b">restart policies · healthchecks</text>
+
+    <rect x="735" y="478" width="245" height="80" rx="6" fill="#0f172a"/>
+    <rect x="735" y="478" width="245" height="80" rx="6" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+    <text x="857" y="502" text-anchor="middle" font-size="12" fill="#e2e8f0" font-weight="700">Storage · Firmware</text>
+    <text x="857" y="520" text-anchor="middle" font-size="9" fill="#94a3b8">1 TB NVMe (19% used) · RPi-Imager</text>
+    <text x="857" y="538" text-anchor="middle" font-size="8" fill="#64748b">reproducible baseline image</text>
+
+    <!-- OBSERVABILITY boundary -->
+    <rect x="40" y="600" width="960" height="80" rx="12" fill="none" stroke="#fbbf24" stroke-width="1.2" stroke-dasharray="8,4"/>
+    <text x="56" y="620" font-size="9" fill="#fbbf24" font-weight="700">OBSERVABILITY</text>
+    <rect x="60" y="628" width="180" height="40" rx="6" fill="#0f172a"/>
+    <rect x="60" y="628" width="180" height="40" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+    <text x="150" y="645" text-anchor="middle" font-size="11" fill="#e2e8f0" font-weight="700">node_exporter</text>
+    <text x="150" y="660" text-anchor="middle" font-size="8" fill="#94a3b8">:9100 · ACTIVE</text>
+    <rect x="265" y="628" width="180" height="40" rx="6" fill="#0f172a"/>
+    <rect x="265" y="628" width="180" height="40" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+    <text x="355" y="645" text-anchor="middle" font-size="11" fill="#e2e8f0" font-weight="700">Prometheus TSDB</text>
+    <text x="355" y="660" text-anchor="middle" font-size="8" fill="#94a3b8">:9090 · 15 s scrape · unless-stopped</text>
+    <rect x="470" y="628" width="180" height="40" rx="6" fill="#0f172a"/>
+    <rect x="470" y="628" width="180" height="40" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.5"/>
+    <text x="560" y="645" text-anchor="middle" font-size="11" fill="#e2e8f0" font-weight="700">Grafana</text>
+    <text x="560" y="660" text-anchor="middle" font-size="8" fill="#94a3b8">:3000 · Prometheus datasource</text>
+    <rect x="675" y="628" width="200" height="40" rx="6" fill="#0f172a"/>
+    <rect x="675" y="628" width="200" height="40" rx="6" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.5"/>
+    <text x="775" y="645" text-anchor="middle" font-size="11" fill="#e2e8f0" font-weight="700">Backups</text>
+    <text x="775" y="660" text-anchor="middle" font-size="8" fill="#94a3b8">AES-256 · PBKDF2 · offsite rsync</text>
+
+    <!-- LEGEND (outside all boundaries) -->
+    <text x="40" y="692" font-size="8" fill="#64748b">Legend:  <tspan fill="#34d399">■</tspan> backend   <tspan fill="#22d3ee">■</tspan> frontend   <tspan fill="#a78bfa">■</tspan> data/ML   <tspan fill="#fb923c">■</tspan> automation   <tspan fill="#fb7185">■</tspan> security   <tspan fill="#94a3b8">■</tspan> external   <tspan fill="#fbbf24">▭</tspan> host boundary   ┄ rose = observability/backup flow</text>
+  </svg>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-header"><div class="card-dot green"></div><h3>Scale</h3></div>
+      <ul>
+        <li>• 14 containers + 12 native daemons</li>
+        <li>• 30+ published ports, audited per-service</li>
+        <li>• 8 GB RAM / 4×A76 / 1 TB NVMe</li>
+        <li>• All services healthy at capture (33 h uptime)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-dot cyan"></div><h3>Engineering</h3></div>
+      <ul>
+        <li>• Per-workload packaging: systemd vs Docker</li>
+        <li>• Loopback-only internal services</li>
+        <li>• Declarative compose + staged monitoring config</li>
+        <li>• Reproducible RPi-Imager baseline</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-dot rose"></div><h3>Operations</h3></div>
+      <ul>
+        <li>• Nightly encrypted credential backups (offsite)</li>
+        <li>• SMART/NVMe health polling</li>
+        <li>• Metrics exporter + Grafana live</li>
+        <li>• Agent-operable: MCP + Grafana + terminal</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>Self-Hosted Platform Architecture · captured from live system · 2026-10-02 · nvm3 / Raspberry Pi 5</footer>
+</div>
+</body>
+</html>

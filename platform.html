@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hardware & Services · Self-Hosted Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b1120; --card:#0f172a; --border:#1e293b; --text:#e2e8f0;
+  --muted:#94a3b8; --accent:#34d399; --accent2:#22d3ee; --code:#0a0f1c;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  font-size:14px; line-height:1.65;
+}
+a{color:var(--accent2); text-decoration:none}
+a:hover{text-decoration:underline}
+.layout{display:grid; grid-template-columns:250px 1fr; min-height:100vh}
+nav{
+  position:sticky; top:0; align-self:start; height:100vh; overflow:auto;
+  padding:26px 20px; border-right:1px solid var(--border); background:var(--card);
+}
+.brand{font-size:13px;font-weight:700;letter-spacing:.3px;margin-bottom:4px}
+.brand span{color:var(--accent)}
+.tag{font-size:10px;color:var(--muted);margin-bottom:22px}
+nav .grp{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#475569;margin:18px 0 6px}
+nav a.item{display:block;font-size:12px;color:var(--muted);padding:5px 8px;border-radius:6px;margin:1px 0}
+nav a.item:hover{background:#111c33;color:var(--text);text-decoration:none}
+nav a.item.cur{background:rgba(52,211,153,.12);color:var(--accent)}
+main{padding:38px 48px; max-width:900px}
+h1,h2,h3{line-height:1.25;font-weight:700}
+h1{font-size:24px;margin:0 0 8px;border-bottom:1px solid var(--border);padding-bottom:14px}
+h2{font-size:18px;margin:34px 0 10px;color:#f1f5f9}
+h3{font-size:15px;margin:22px 0 8px}
+p{margin:12px 0}
+ul,ol{margin:12px 0; padding-left:22px}
+li{margin:5px 0}
+code{background:var(--code);padding:2px 6px;border-radius:4px;font-size:12.5px;border:1px solid var(--border)}
+pre{background:var(--code);border:1px solid var(--border);border-radius:8px;padding:14px 16px;overflow:auto}
+pre code{background:none;border:none;padding:0}
+table{border-collapse:collapse;width:100%;margin:16px 0;font-size:13px;display:block;overflow-x:auto}
+th,td{border:1px solid var(--border);padding:8px 12px;text-align:left}
+th{background:#111c33;color:#f1f5f9}
+tr:nth-child(even) td{background:#0d1526}
+blockquote{border-left:3px solid var(--accent);margin:14px 0;padding:4px 16px;color:var(--muted);background:#0d1526;border-radius:0 6px 6px 0}
+hr{border:none;border-top:1px solid var(--border);margin:26px 0}
+.crumbs{font-size:11px;color:#475569;margin-bottom:18px}
+.crumbs a{color:#64748b}
+.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--border);font-size:10px;color:#475569}
+@media(max-width:760px){.layout{grid-template-columns:1fr}nav{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border)}main{padding:24px 18px}}
+</style></head>
+<body><div class="layout">
+<nav><div class="brand">self<span>-hosted</span></div>
+<div class="tag">Raspberry Pi 5 · 20+ services · portfolio</div>
+<div class="grp">Overview</div><a class="item" href="README.html">Home</a><div class="grp">Platform</div><a class="item cur" href="platform.html">Hardware & Services</a><a class="item" href="architecture.html">Architecture</a><div class="grp">Projects</div><a class="item" href="projects/media-pipeline.html">Media Pipeline</a><a class="item" href="projects/local-ai-agents.html">Local AI & Agents</a><a class="item" href="projects/observability-ops.html">Observability & Ops</a><a class="item" href="projects/security-networking.html">Security & Networking</a><a class="item" href="projects/published.html">Published Work</a><div class="grp">Portfolio</div><a class="item" href="skills.html">Skills Matrix</a><a class="item" href="background.html">Background</a><div class="grp">View</div><a class="item" href="diagram/index.html">Architecture Diagram</a></nav>
+<main><div class="crumbs"><a href="index.html">home</a> / hardware & services</div>
+<h1>Platform Overview</h1>
+<p><strong>Host:</strong> <code>nvm3</code> · Raspberry Pi 5 Model B Rev 1.1 · Debian 13 (trixie) · kernel <code>6.18.39+rpt-rpi-2712</code></p>
+<h2>Hardware</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Spec</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SoC</td>
+<td>Raspberry Pi 5, 4× Cortex-A76 (aarch64)</td>
+</tr>
+<tr>
+<td>RAM</td>
+<td>8 GB (7.9 GiB visible)</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>1 TB NVMe SSD (HAT), 939 GB usable, ~19% used at capture</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>Debian 13, RPi-Imager-provisioned (cloud-init instance <code>rpi-imager-1785247424630</code>, image created 2026-07-28, most recent reprovision 2026-10-01)</td>
+</tr>
+<tr>
+<td>Container runtime</td>
+<td>Docker 29.8.0 + containerd</td>
+</tr>
+<tr>
+<td>Desktop</td>
+<td>Labwc Wayland compositor (LightDM) + Xwayland + Pipeewire</td>
+</tr>
+</tbody></table>
+<p>The Pi 5&#39;s NVMe interface and 8 GB of RAM let this box run a full service fleet that
+would normally need a mini-PC: a media platform, a photo platform with ML, a local AI
+stack, and an automation engine — all on consumer hardware, all on one power bill.</p>
+<h2>Network</h2>
+<ul>
+<li>LAN: <code>172.16.0.0/16</code>, host at <code>172.16.0.229</code> (DHCP)</li>
+<li>Docker bridge networks: one per service group (<code>br-*</code>), plus a shared external
+<code>web-proxy</code> network for reverse-proxied apps</li>
+<li>Public reachability: DuckDNS (<code>*.b0g0.duckdns.org</code>) + Nginx Proxy Manager (TLS)</li>
+<li>DNS: Pi-hole FTL v6.4.3 running locally; upstream via router <code>172.16.0.1</code></li>
+</ul>
+<h2>Service inventory (captured 2026-10-02)</h2>
+<h3>Containers (14 running)</h3>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Role</th>
+<th>Port</th>
+<th>Version / image</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Open WebUI</td>
+<td>LLM web UI</td>
+<td>8081</td>
+<td><code>ghcr.io/open-webui/open-webui:main</code></td>
+</tr>
+<tr>
+<td>searxng-mcp</td>
+<td>SearXNG search as MCP server</td>
+<td>8889</td>
+<td><code>ghcr.io/whw23/searxng-http-mcp</code></td>
+</tr>
+<tr>
+<td>Nginx Proxy Manager</td>
+<td>Reverse proxy + auto-TLS</td>
+<td>80, 81, 443</td>
+<td><code>jc21/nginx-proxy-manager</code></td>
+</tr>
+<tr>
+<td>Vaultwarden</td>
+<td>Password manager</td>
+<td>80 (internal)</td>
+<td><code>vaultwarden/server</code></td>
+</tr>
+<tr>
+<td>n8n</td>
+<td>Workflow automation</td>
+<td>5678</td>
+<td>n8n 2.37.10</td>
+</tr>
+<tr>
+<td>LibreTranslate</td>
+<td>Local translation API</td>
+<td>5001</td>
+<td><code>libretranslate/libretranslate</code></td>
+</tr>
+<tr>
+<td>Immich (server)</td>
+<td>Self-hosted photo/video archive</td>
+<td>2283</td>
+<td><code>ghcr.io/immich-app/immich-server:v3</code></td>
+</tr>
+<tr>
+<td>Immich (postgres)</td>
+<td>Immich data store</td>
+<td>5432 (internal)</td>
+<td><code>postgres:14-vectorchord0.4.3-pgvectors0.2.0</code></td>
+</tr>
+<tr>
+<td>Immich (ML)</td>
+<td>Face/person recognition, smart search</td>
+<td>internal</td>
+<td><code>ghcr.io/immich-app/immich-machine-learning:v3</code></td>
+</tr>
+<tr>
+<td>Immich (redis)</td>
+<td>Immich cache/queue</td>
+<td>6379 (loopback)</td>
+<td><code>valkey/valkey:9</code></td>
+</tr>
+<tr>
+<td>LibreOffice</td>
+<td>Document conversion</td>
+<td>3001, 3004</td>
+<td><code>linuxserver/libreoffice</code></td>
+</tr>
+<tr>
+<td>Yuvomi</td>
+<td>Family planner (tasks, calendar, shopping)</td>
+<td>3000</td>
+<td><code>ghcr.io/ulsklyc/yuvomi</code></td>
+</tr>
+<tr>
+<td>FlareSolverr</td>
+<td>Anti-bot solving for scrapers</td>
+<td>8191 (loopback only)</td>
+<td><code>ghcr.io/flaresolverr/flaresolverr</code></td>
+</tr>
+</tbody></table>
+<h3>Native daemons (systemd)</h3>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Role</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Jellyfin 10.11.11</td>
+<td>Media server</td>
+<td>port 8096, WidevineCdm installed for DRM</td>
+</tr>
+<tr>
+<td>Sonarr / Lidarr / Prowlarr</td>
+<td>TV / music / indexer management</td>
+<td>installed under <code>/opt</code></td>
+</tr>
+<tr>
+<td>Jackett</td>
+<td>Indexer bridge</td>
+<td>port 9117</td>
+</tr>
+<tr>
+<td>qBittorrent-nox</td>
+<td>Headless torrenting</td>
+<td>webui 62978 (LAN-bound)</td>
+</tr>
+<tr>
+<td>Pi-hole FTL v6.4.3</td>
+<td>DNS sinkhole / ad-block</td>
+<td>cron-managed</td>
+</tr>
+<tr>
+<td>Grafana server</td>
+<td>Dashboards</td>
+<td>systemd service</td>
+</tr>
+<tr>
+<td>prometheus-node-exporter</td>
+<td>Host metrics</td>
+<td>port 9100, active</td>
+</tr>
+<tr>
+<td>Prometheus</td>
+<td>Metrics TSDB</td>
+<td>container <code>prom/prometheus</code>, :9090, <code>unless-stopped</code>, TSDB on named volume, exposed at <code>prometheus.b0g0.duckdns.org</code></td>
+</tr>
+<tr>
+<td>Portfolio server</td>
+<td>Static portfolio site (this wiki rendered)</td>
+<td>systemd user service <code>portfolio-server</code>, <code>Restart=always</code>, :8090, survives reboots</td>
+</tr>
+<tr>
+<td>Hermes Agent</td>
+<td>Autonomous agent runtime (this wiki&#39;s host)</td>
+<td>dashboard + gateway</td>
+</tr>
+<tr>
+<td>smartmontools</td>
+<td>Disk health</td>
+<td>NVMe SMART polling</td>
+</tr>
+<tr>
+<td>SSH</td>
+<td>Remote admin</td>
+<td>port 22</td>
+</tr>
+</tbody></table>
+<h3>Planned / present but idle</h3>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>State</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Frigate NVR</td>
+<td>Compose + go2rtc/HomeKit config present, 1 GB tmpfs segment cache; not currently running (no camera attached at capture time)</td>
+</tr>
+<tr>
+<td>Ollama</td>
+<td>Configured as Open WebUI backend via <code>OLLAMA_BASE_URL</code>; routed through the Hermes OpenAI-compatible proxy (<code>OPENAI_API_BASE_URL</code>) — no separate listener on the host</td>
+</tr>
+</tbody></table>
+<h2>Why this matters (engineering signal)</h2>
+<ul>
+<li><strong>Full-stack ownership:</strong> one engineer designs, provisions, secures, monitors, and
+operates every layer — hardware → OS → containers → apps → observability.</li>
+<li><strong>Production discipline at home scale:</strong> declarative compose files, per-service network
+isolation, loopback-only binding for internal helpers, nightly credential backups,
+metrics + dashboards, and a live agent layer for day-2 operations.</li>
+<li><strong>Breadth under constraint:</strong> 8 GB RAM on ARM64 forces real resource discipline (shared
+postgres, valkey, tmpfs caches) — the same constraints that matter in a cloud cost
+review.</li>
+</ul>
+
+<div class="foot">Self-Hosted Platform Portfolio · captured from the live system · nvm3 / Raspberry Pi 5</div>
+</main></div></body></html>

@@ -116,8 +116,6 @@ healthchecks (several containers report <code>healthy</code>). The same lesson a
 portfolio site server: it started as a bare background process and died on a reboot, so it
 was promoted to a systemd user service (<code>portfolio-server</code>, <code>Restart=always</code>) — verified
 by <code>kill -9</code> and watching systemd respawn it.</li>
-<li><strong>Loopback-only binding</strong> for internal helpers (FlareSolverr <code>127.0.0.1:8191</code>, Valkey,
-Immich postgres) — smallest reasonable attack surface.</li>
 <li><strong>Disk health</strong> on the 1 TB NVMe via smartmontools; <code>rpi-eeprom-update</code> tracks firmware.</li>
 <li><strong>Reproducible base</strong> — RPi-Imager image (2026-07-28) as the provisioning baseline, so
 the OS layer can be rebuilt, not just patched.</li>

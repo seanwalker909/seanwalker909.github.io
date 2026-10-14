@@ -79,19 +79,9 @@ library management → streaming, with a native-ARM64 daemon layer and a contain
 <td><code>/opt/WidevineCdm</code></td>
 </tr>
 <tr>
-<td><strong>Sonarr</strong></td>
-<td>TV series: discovery, quality management, download requests</td>
-<td>systemd, <code>/opt/Sonarr</code></td>
-</tr>
-<tr>
-<td><strong>Lidarr</strong></td>
-<td>Music: artist/album management</td>
-<td>systemd, <code>/opt/Lidarr</code></td>
-</tr>
-<tr>
-<td><strong>Prowlarr</strong></td>
-<td>Indexer propagation to Jackett/*arr</td>
-<td>systemd, <code>/opt/Prowlarr</code></td>
+<td><strong>Media management suite</strong></td>
+<td>TV / music / indexer management</td>
+<td>systemd, <code>/opt</code></td>
 </tr>
 <tr>
 <td><strong>Jackett</strong></td>
@@ -107,7 +97,7 @@ library management → streaming, with a native-ARM64 daemon layer and a contain
 <h2>The flow</h2>
 <pre><code>indexers ──▶ Prowlarr ──propagate──▶ Jackett
                                         │
-        Sonarr / Lidarr ──search──▶ Jackett ──requests──▶ qBittorrent
+        Media management suite ──search──▶ Jackett ──requests──▶ qBittorrent
              │                                                        │
              └──── quality rules, upgrades, renames ◀── completion ──┘
                                         │
@@ -116,7 +106,7 @@ library management → streaming, with a native-ARM64 daemon layer and a contain
 </code></pre>
 <h2>Engineering notes</h2>
 <ul>
-<li><strong>Two deployment patterns, deliberately.</strong> The *arr suite runs as native systemd daemons
+<li><strong>Two deployment patterns, deliberately.</strong> The media management suite runs as native systemd daemons
 (official ARM64 packages), while the edge/adjacent services are containerized. Choosing
 the right packaging model per workload — rather than &quot;everything in Docker&quot; or &quot;nothing
 in Docker&quot; — is a real production decision.</li>
@@ -127,7 +117,7 @@ the same cost/footprint thinking as cloud right-sizing work.</li>
 client access are all managed by one person with full root on the box.</li>
 </ul>
 <h2>Status (2026-10-02)</h2>
-<p>All six daemons active (Sonarr, Lidarr, Prowlarr, Jackett, qBittorrent, Jellyfin).
+<p>All media services active (media management suite, Jackett, qBittorrent, Jellyfin).
 Radarr not present in the current set (movies not in use).</p>
 
 <div class="foot">Self-Hosted Platform Portfolio · captured from the live system · nvm3 / Raspberry Pi 5</div>

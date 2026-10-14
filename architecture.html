@@ -86,18 +86,18 @@ hr{border:none;border-top:1px solid var(--border);margin:26px 0}
                         │ Docker 29.8 · 8 GB · 1TB NVMe│
    nightly AES-256 rsync│  Media │ LocalAI │ Photos    │
   ┌──────────────────┐  │ Jelly- │ OWebUI  │ Immich    │
-  │ HOST: walk3r     │◀─│ fin*arr│ SearXNG │ PG+ML     │
+  │ HOST: walk3r     │◀─│ fin*media│ SearXNG │ PG+ML     │
   │ RPi 5 · 128 GB   │back│ n8n+ │ Pi-hole │ Vaultwarden│
   │ microSD          │  │ Hermes │ DNS     │           │
   │ Vaultwarden bkp  │  │ OBS: node_exp→Prom→Grafana   │
   └──────────────────┘  └─────────────────────────────┘
 </code></pre>
 <h2>Data flows worth calling out</h2>
-<p><strong>Media pipeline.</strong> <code>Prowlarr</code> propagates indexer definitions to <code>Jackett</code>; <code>Sonarr</code>/<code>Lidarr</code>
+<p><strong>Media pipeline.</strong> <code>Prowlarr</code> propagates indexer definitions to <code>Jackett</code>; media management suite
 discover and request content; <code>qBittorrent-nox</code> downloads; <code>Jellyfin</code> transcodes/serves,
 with <code>WidevineCdm</code> present for DRM playback paths. All daemons run as systemd services with
 <code>/opt</code>-based installs — a deliberately different deployment pattern from the containerized
-apps, chosen for the *arr suite&#39;s native ARM64 packages.</p>
+apps, chosen for the media management suite&#39;s native ARM64 packages.</p>
 <p><strong>Local AI.</strong> <code>Open WebUI</code> (8081) serves the chat interface; it routes through
 <code>Hermes</code> (agent runtime) to an OpenAI-compatible backend — LM Studio on the MacBook Pro M2
 (2023, 32 GB, <code>172.16.0.244:1234</code>, always-on) over the LAN — rather than a model server on the Pi
@@ -119,7 +119,7 @@ locally against vector indexes — a real ML-serving topology on 8 GB of RAM.</p
 app; DuckDNS resolves the public name to the LAN IP.</li>
 <li><strong>Internal:</strong> each service group gets its own Docker bridge (<code>br-*</code>); shared services
 (Immich stack) share a group network; <code>web-proxy</code> is an external network the proxied apps
-join. Internal-only services (Immich postgres, Valkey, FlareSolverr) are loopback- or
+join. Internal-only services (Immich postgres, Valkey) are loopback- or
 bridge-bound and never published to the LAN.</li>
 <li><strong>Host:</strong> systemd daemons bind to 0.0.0.0 only where LAN access is intended (Jellyfin,
 qBittorrent webui on the LAN IP), otherwise loopback.</li>

@@ -93,12 +93,7 @@ hr{border:none;border-top:1px solid var(--border);margin:26px 0}
   └──────────────────┘  └─────────────────────────────┘
 </code></pre>
 <h2>Data flows worth calling out</h2>
-<p><strong>Media pipeline.</strong> <code>Prowlarr</code> propagates indexer definitions to <code>Jackett</code>; media management suite
-discover and request content; <code>qBittorrent-nox</code> downloads; <code>Jellyfin</code> transcodes/serves,
-with <code>WidevineCdm</code> present for DRM playback paths. All daemons run as systemd services with
-<code>/opt</code>-based installs — a deliberately different deployment pattern from the containerized
-apps, chosen for the media management suite&#39;s native ARM64 packages.</p>
-<p><strong>Local AI.</strong> <code>Open WebUI</code> (8081) serves the chat interface; it routes through
+<p><strong>Local AI.</strong> <code>Open WebUI</code> (8081), Hermes agent, Open Viking Persistant Memory, serves the chat interface; it routes through
 <code>Hermes</code> (agent runtime) to an OpenAI-compatible backend — LM Studio on the MacBook Pro M2
 (2023, 32 GB, <code>172.16.0.244:1234</code>, always-on) over the LAN — rather than a model server on the Pi
 itself; <code>searxng-mcp</code>

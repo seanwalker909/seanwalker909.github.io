@@ -6,34 +6,18 @@
 <title>Architecture Diagram — Sean Walker</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root{ --bg:#020617; --card:#0f172a; --border:#1e293b; --text:#e2e8f0; --muted:#94a3b8; --side:#0b1020; }
+  :root{ --bg:#020617; --card:#0f172a; --border:#1e293b; --text:#e2e8f0; --muted:#94a3b8; --side:#0b1020; --accent:#34d399; }
   *{ margin:0; padding:0; box-sizing:border-box; }
-  body{ background:var(--bg); color:var(--text); font-family:'JetBrains Mono',monospace; padding:40px 24px; display:flex; gap:24px; }
-  .wrap{ max-width:1080px; margin:0 auto; }
-  aside{ width:220px; flex:0 0 220px; background:var(--side); border:1px solid var(--border); border-radius:12px; padding:16px; height:max-content; position:sticky; top:24px; }
-  aside .brand{ font-size:13px; font-weight:700; letter-spacing:.3px; margin-bottom:4px; }
-  aside .brand span{ color:var(--accent) }
+  body{ background:var(--bg); color:var(--text); font-family:'JetBrains Mono',monospace; display:grid; grid-template-columns:250px 1fr; min-height:100vh; }
+  aside{ position:sticky; top:0; align-self:start; height:100vh; overflow:auto; padding:26px 20px; border-right:1px solid var(--border); background:var(--card); }
+  aside .brand{ font-size:13px; font-weight:700; letter-spacing:.3px; margin-bottom:4px }
   aside .tag{ font-size:10px; color:var(--muted); margin-bottom:22px }
-  aside .grp{ font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:#64748b; margin:14px 0 6px }
-  aside a{ display:block; font-size:12px; color:var(--text); text-decoration:none; padding:6px 4px; border-radius:6px; }
-  aside a.cur{ background:#1e293b; }
-  aside a:hover{ background:#1e293b; }
+  aside .grp{ font-size:9px; text-transform:uppercase; letter-spacing:1px; color:#475569; margin:18px 0 6px }
+  aside a{ display:block; font-size:12px; color:var(--muted); padding:5px 8px; border-radius:6px; margin:1px 0; text-decoration:none }
+  aside a:hover{ background:#111c33; color:var(--text); text-decoration:none }
+  aside a.cur{ background:rgba(52,211,153,.12); color:var(--accent) }
+  .wrap{ padding:38px 48px; max-width:1080px }
   header{ margin-bottom:24px; }
-  .dot{ display:inline-block; width:10px; height:10px; border-radius:50%; background:#34d399; margin-right:10px; animation:pulse 2s infinite; }
-  @keyframes pulse{ 0%,100%{opacity:1; box-shadow:0 0 0 0 rgba(52,211,153,.5);} 50%{opacity:.7; box-shadow:0 0 0 6px rgba(52,211,153,0);} }
-  h1{ font-size:20px; font-weight:700; display:flex; align-items:center; }
-  .sub{ color:var(--muted); font-size:12px; margin-top:6px; }
-  .diagram-card{ background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; margin-bottom:24px; overflow-x:auto; }
-  .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-bottom:24px; }
-  .card{ background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
-  .card-header{ display:flex; align-items:center; gap:8px; margin-bottom:12px; }
-  .card-dot{ width:8px; height:8px; border-radius:50%; }
-  .cyan{ background:#22d3ee; } .green{ background:#34d399; } .violet{ background:#a78bfa; }
-  .amber{ background:#fbbf24; } .rose{ background:#fb7185; } .orange{ background:#fb923c; }
-  .card h3{ font-size:13px; font-weight:700; }
-  .card ul{ list-style:none; }
-  .card li{ font-size:11px; color:var(--muted); margin:6px 0; }
-  footer{ color:#475569; font-size:10px; text-align:center; }
 </style>
 </head>
 <body>

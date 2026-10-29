@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Professional Experience — Sean Walker</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{ --bg:#0b1120; --card:#0f172a; --border:#1e293b; --text:#e2e8f0; --muted:#94a3b8; --accent:#34d399; }
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'JetBrains Mono',ui-monospace,monospace;font-size:14px;line-height:1.65}
+.layout{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+nav{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:26px 20px;border-right:1px solid var(--border);background:var(--card)}
+.brand{font-size:13px;font-weight:700;letter-spacing:.3px;margin-bottom:4px}
+.tag{font-size:10px;color:var(--muted);margin-bottom:22px}
+nav .grp{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#475569;margin:18px 0 6px}
+nav a.item{display:block;font-size:12px;color:var(--muted);padding:5px 8px;border-radius:6px;margin:1px 0;text-decoration:none}
+nav a.item:hover{background:#111c33;color:var(--text)}
+nav a.item.cur{background:rgba(52,211,153,.12);color:var(--accent)}
+main{padding:38px 48px;max-width:900px}
+h1{font-size:24px;margin:0 0 16px;border-bottom:1px solid var(--border);padding-bottom:14px}
+pre{white-space:pre-wrap;font-family:inherit}
+</style></head>
+<body><div class="layout"><nav><div class="brand">Sean Walker</div><div class="tag">Linux Builder · AI Engineer · Sovern Tech Advocate</div><div class="grp">Overview</div><a class="item" href="index.html">Home</a>
+</div><div class="grp">Resume</div><a class="item" href="professional-summary.html">Professional Summary</a>
+<a class="item" href="technical-skills.html">Technical Skills</a>
+<a class="item" href="certifications.html">Certifications</a>
+<a class="item cur" href="professional-experience.html">Professional Experience</a>
+<a class="item" href="home-lab-ai.html">Home Lab & AI</a>
+<a class="item" href="education.html">Education</a>
+</div><div class="grp">View</div><a class="item" href="diagram/index.html">Architecture Diagram</a>
+</nav><main><h1>Professional Experience</h1>
+<pre>PROFESSIONAL EXPERIENCE
+Horizon3.ai | Platform Engineer | Oct 2025 – Sept 2026
+• Facilitated secure connectivity between AWS Redshift and Workato via on-premise agent
+containers, streamlining mission-critical RevOps workflows.
+• Infrastructure as Code (IaC): Developed Crossplane generators, functions, and compositions in
+Go for application team consumption.
+• Cluster Management: Managed and upgraded Kubernetes Rancher (RKE2) clusters deployed on
+AWS to ensure high availability.
+• Security &amp; Compliance: Automated EC2 AMI patching within Kubernetes clusters to maintain
+SOC2 compliance and remediate vulnerabilities identified by Vanta.
+• On-Call Operations: Participated in a 24/7 rotation supporting mission-critical, event-driven
+Kubernetes services (Argo Workflows, Argo Events).
+AppOmni | Site Reliability Engineer | April 2024 – Oct 2025
+• Observability Optimization: Managed and scaled VictoriaMetrics (Operator) with SSD PVC
+storage; optimized capacity by implementing label remapping to handle high-cardinality
+metrics.
+• Secure Networking: Designed and deployed secure, cross-project GCP networking using
+Private Service Connect, GKE, and PgBouncer to meet strict data residency constraints.
+
+
+•
+•
+
+Vulnerability Reduction: Contributed to an 80% reduction in total CVEs for FedRAMP-bound
+workloads by driving systematic Helm chart upgrades via Flux CD; collaborated on image
+hardening with Chainguard APKO/Melange distroless containers.
+Database Reliability: Managed production PostgreSQL databases (Python/Celery orchestration)
+in a 24/7 on-call rotation, ensuring high availability of deadlock prone workloads.
+
+Dolby Laboratories | DevOps Engineer - Site Reliability | June 2019 – December 2023
+• GitOps Implementation: Deployed and managed an Argo CD ‘Management’ cluster via
+Terraform/Kustomize, providing secure continuous delivery for 100+ microservices across 10+
+Kubernetes clusters.
+• Monitoring as Code: Automated the lifecycle of Datadog resources (SLOs, Dashboards,
+Synthetic tests) using the Datadog Terraform provider, ensuring all monitoring is versioned and
+reproducible.
+• Cost Reduction (Observability): Reduced service observability costs by ~30% by implementing
+intelligent filtering of Kubernetes Datadog Agent ingestion.
+• Automated Scaling: Engineered optimal scaling for encoding services using HPA and
+Prometheus Custom Metrics (PromQL), reducing compute costs by &gt;50% by scaling based on
+throughput.
+• Progressive Delivery: Implemented Blue/Green and Canary deployment strategies using Argo
+Rollouts, utilizing PromQL queries to trigger automatic rollbacks during failed deployments.</pre></main></div></body></html>

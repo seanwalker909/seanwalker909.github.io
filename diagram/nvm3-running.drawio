@@ -4,44 +4,44 @@
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
-        <mxCell id="nginx-proxy-manager" value="nginx-proxy-manager&#xa;jc21/nginx-proxy-manager:latest" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="980" y="0" width="160" height="60" as="geometry"/>
+        <mxCell id="nginx-proxy-manager" value="nginx-proxy-manager&#xa;jc21/nginx-proxy-manager:latest&#xa;:80 → :81 → :443" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="980" y="0" width="160" height="80" as="geometry"/>
         </mxCell>
-        <mxCell id="vaultwarden" value="vaultwarden&#xa;vaultwarden/server:latest" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="1330" y="100" width="160" height="60" as="geometry"/>
+        <mxCell id="vaultwarden" value="vaultwarden&#xa;vaultwarden/server:latest&#xa;:80" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1330" y="100" width="160" height="80" as="geometry"/>
         </mxCell>
-        <mxCell id="searxng-mcp-searxng-mcp-1" value="searxng-mcp-searxng-mcp-1&#xa;ghcr.io/aicrafted/searxng-mcp:latest" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="1690" y="0" width="160" height="60" as="geometry"/>
+        <mxCell id="searxng-mcp-searxng-mcp-1" value="searxng-mcp-searxng-mcp-1&#xa;ghcr.io/aicrafted/searxng-mcp:latest&#xa;:32123" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1690" y="0" width="160" height="80" as="geometry"/>
         </mxCell>
-        <mxCell id="openwebui-openwebui-1" value="openwebui-openwebui-1&#xa;ghcr.io/open-webui/open-webui:main" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="1520" y="100" width="160" height="60" as="geometry"/>
+        <mxCell id="openwebui-openwebui-1" value="openwebui-openwebui-1&#xa;ghcr.io/open-webui/open-webui:main&#xa;:8080" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1520" y="100" width="160" height="80" as="geometry"/>
         </mxCell>
-        <mxCell id="n8n_app" value="n8n_app&#xa;n8nio/n8n:2.46.6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="790" y="100" width="160" height="60" as="geometry"/>
+        <mxCell id="n8n_app" value="n8n_app&#xa;n8nio/n8n:2.46.6&#xa;:5678" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="790" y="100" width="160" height="80" as="geometry"/>
         </mxCell>
-        <mxCell id="radarr" value="radarr&#xa;lscr.io/linuxserver/radarr:latest" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="970" y="100" width="160" height="60" as="geometry"/>
+        <mxCell id="radarr" value="radarr&#xa;lscr.io/linuxserver/radarr:latest&#xa;:7878" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="970" y="100" width="160" height="80" as="geometry"/>
         </mxCell>
-        <mxCell id="immich_server" value="immich_server&#xa;ghcr.io/immich-app/immich-server:v3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="390" y="100" width="160" height="60" as="geometry"/>
+        <mxCell id="immich_server" value="immich_server&#xa;ghcr.io/immich-app/immich-server:v3&#xa;:2283" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="390" y="100" width="160" height="80" as="geometry"/>
         </mxCell>
-        <mxCell id="immich_postgres" value="immich_postgres&#xa;ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="220" y="210" width="160" height="60" as="geometry"/>
+        <mxCell id="immich_postgres" value="immich_postgres&#xa;ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23&#xa;:5432" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="220" y="210" width="160" height="80" as="geometry"/>
         </mxCell>
         <mxCell id="immich_machine_learning" value="immich_machine_learning&#xa;ghcr.io/immich-app/immich-machine-learning:v3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="10" y="210" width="160" height="60" as="geometry"/>
         </mxCell>
-        <mxCell id="immich_redis" value="immich_redis&#xa;docker.io/valkey/valkey:9@sha256:8e8d64b405ce18f41b8e5ee20aa4687a8ed0022d1298f2ce31cdcf3a76e09411" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="390" y="210" width="160" height="60" as="geometry"/>
+        <mxCell id="immich_redis" value="immich_redis&#xa;docker.io/valkey/valkey:9@sha256:8e8d64b405ce18f41b8e5ee20aa4687a8ed0022d1298f2ce31cdcf3a76e09411&#xa;:6379" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="390" y="210" width="160" height="80" as="geometry"/>
         </mxCell>
-        <mxCell id="yuvomi" value="yuvomi&#xa;ghcr.io/ulsklyc/yuvomi:latest" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="1150" y="100" width="160" height="60" as="geometry"/>
+        <mxCell id="yuvomi" value="yuvomi&#xa;ghcr.io/ulsklyc/yuvomi:latest&#xa;:3000" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="100" width="160" height="80" as="geometry"/>
         </mxCell>
-        <mxCell id="eloquent_lumiere" value="eloquent_lumiere&#xa;libretranslate/libretranslate" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="1870" y="0" width="160" height="60" as="geometry"/>
+        <mxCell id="eloquent_lumiere" value="eloquent_lumiere&#xa;libretranslate/libretranslate&#xa;:5001 → :5000" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1870" y="0" width="160" height="80" as="geometry"/>
         </mxCell>
-        <mxCell id="flaresolverr" value="flaresolverr&#xa;ghcr.io/flaresolverr/flaresolverr:latest" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="2050" y="0" width="160" height="60" as="geometry"/>
+        <mxCell id="flaresolverr" value="flaresolverr&#xa;ghcr.io/flaresolverr/flaresolverr:latest&#xa;:8191" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="2050" y="0" width="160" height="80" as="geometry"/>
         </mxCell>
         <mxCell id="net:immich_default" value="immich_default" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="340" y="410" width="120" height="70" as="geometry"/>

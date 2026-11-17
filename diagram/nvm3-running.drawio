@@ -55,7 +55,7 @@
         <mxCell id="net:web-proxy" value="web-proxy" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="460" y="200" width="120" height="70" as="geometry"/>
         </mxCell>
-        <mxCell id="vol:fe3a2c6ac56ac23abee13eef53c5ca5b98a073070965d661cdc5f6db16bc8672" value="fe3a2c6ac56ac23abee13eef53c5ca5b98a073070965d661cdc5f6db16bc8672" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+        <mxCell id="vol:flaresolverr_config" value="flaresolverr_config" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
           <mxGeometry x="1520" y="100" width="120" height="70" as="geometry"/>
         </mxCell>
         <mxCell id="vol:immich_model-cache" value="immich_model-cache" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
@@ -67,7 +67,7 @@
         <mxCell id="vol:openwebui_openwebui-data" value="openwebui_openwebui-data" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;size=15;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
           <mxGeometry x="140" y="200" width="120" height="70" as="geometry"/>
         </mxCell>
-        <mxCell id="e0" value="" style="html=1;rounded=0;" edge="1" parent="1" source="flaresolverr" target="vol:fe3a2c6ac56ac23abee13eef53c5ca5b98a073070965d661cdc5f6db16bc8672">
+        <mxCell id="e0" value="" style="html=1;rounded=0;" edge="1" parent="1" source="flaresolverr" target="vol:flaresolverr_config">
           <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1580" y="60"/><mxPoint x="1580" y="90"/></Array></mxGeometry>
         </mxCell>
         <mxCell id="e1" value="" style="html=1;rounded=0;" edge="1" parent="1" source="immich_machine_learning" target="net:immich_default">

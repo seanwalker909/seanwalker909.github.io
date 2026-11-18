@@ -7,9 +7,6 @@
         <mxCell id="nginx-proxy-manager" value="nginx-proxy-manager&#xa;jc21/nginx-proxy-manager:latest&#xa;:80 → :81 → :443" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="980" y="0" width="160" height="80" as="geometry"/>
         </mxCell>
-        <mxCell id="proxyhost:yuvomi" value="yuvomi.b0g0.duckdns.org&#xa;→ yuvomi:3000" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
-          <mxGeometry x="1180" y="0" width="180" height="80" as="geometry"/>
-        </mxCell>
         <mxCell id="vaultwarden" value="vaultwarden&#xa;vaultwarden/server:latest&#xa;:80" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
           <mxGeometry x="1330" y="100" width="160" height="80" as="geometry"/>
         </mxCell>
@@ -196,8 +193,8 @@
         <mxCell id="e30" value="" style="html=1;rounded=0;" edge="1" parent="1" source="veth:yuvomi" target="net:web-proxy">
           <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1220" y="300"/><mxPoint x="1220" y="330"/><mxPoint x="1220" y="330"/><mxPoint x="1220" y="330"/><mxPoint x="1150" y="330"/></Array></mxGeometry>
         </mxCell>
-        <mxCell id="e31" value="" style="html=1;rounded=0;" edge="1" parent="1" source="nginx-proxy-manager" target="proxyhost:yuvomi">
-          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1140" y="40"/><mxPoint x="1180" y="40"/></Array></mxGeometry>
+        <mxCell id="e31" value="yuvomi:3000" style="html=1;rounded=0;" edge="1" parent="1" source="nginx-proxy-manager" target="yuvomi">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1060" y="40"/><mxPoint x="1230" y="140"/></Array></mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
